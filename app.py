@@ -1,0 +1,9 @@
+from app import create_app
+
+# 使用应用工厂创建Flask应用实例
+app = create_app()
+
+if __name__ == '__main__':
+    # 启动应用服务器
+    app.run(debug=True, host='0.0.0.0', port=5000)
+
