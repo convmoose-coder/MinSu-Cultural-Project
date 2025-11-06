@@ -49,4 +49,5 @@ export const folkCultureApi = {
   getCategories: () => apiClient.get('/categories')
 }
 
-export default folkCultureApi
+// 导出apiClient实例以供其他模块使用
+export default apiClient

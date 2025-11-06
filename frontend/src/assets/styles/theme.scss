@@ -1,0 +1,243 @@
+// 导入Sass的color和map模块
+@use "sass:color";
+@use "sass:map";
+
+// 现代化民族特色颜色主题
+// 既保留传统元素，又融入现代设计理念
+
+// 主色调 - 从传统红色系优化而来，更加现代和柔和
+$primary-color: #E63946;        // 现代红色，比传统红色更鲜亮但不过于艳丽
+$primary-light: #F1A9A0;        // 浅红色，用于背景和装饰
+$primary-dark: #A61E29;        // 深红色，用于强调和文字
+$primary-gradient: linear-gradient(135deg, #E63946 0%, #A61E29 100%); // 红色渐变
+
+// 辅助色 - 从传统金色和蓝色优化而来
+$secondary-color: #F4A261;     // 现代金色，温暖而不刺眼
+$accent-color: #2A9D8F;        // 现代青色，清新自然
+$accent-light: #A8DADC;        // 浅青色，用于背景和装饰
+$accent-dark: #1D6A68;         // 深青色，用于强调和文字
+
+// 中性色 - 更加现代和平衡的灰色系
+$gray-50: #F8F9FA;
+$gray-100: #F1F3F5;
+$gray-200: #E9ECEF;
+$gray-300: #DEE2E6;
+$gray-400: #CED4DA;
+$gray-500: #ADB5BD;
+$gray-600: #6C757D;
+$gray-700: #495057;
+$gray-800: #343A40;
+$gray-900: #212529;
+
+// 文字颜色
+$text-primary: $gray-900;      // 主要文字
+$text-secondary: $gray-600;    // 次要文字
+$text-tertiary: $gray-500;     // 三级文字
+$text-disabled: $gray-400;     // 禁用文字
+$text-inverse: #FFFFFF;        // 反色文字
+
+// 背景颜色
+$bg-primary: #FFFFFF;          // 主背景
+$bg-secondary: $gray-50;       // 次背景
+$bg-accent: rgba($accent-light, 0.3); // 装饰背景
+$bg-overlay: rgba(0, 0, 0, 0.5); // 遮罩背景
+
+// 边框颜色
+$border-light: $gray-200;      // 浅边框
+$border-medium: $gray-300;     // 中等边框
+$border-dark: $gray-400;       // 深边框
+
+// 状态颜色
+$success: #2ECC71;             // 成功
+$warning: #F39C12;             // 警告
+$danger: #E74C3C;              // 危险
+$info: #3498DB;                // 信息
+
+// 阴影
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+$shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.15);
+
+// 民族特色装饰颜色
+$traditional-red: #C8102E;     // 传统中国红，用于特定民族元素
+$traditional-gold: #FFD700;    // 传统金色，用于特定民族元素
+$traditional-blue: #1E4A8B;    // 传统蓝色，用于特定民族元素
+
+// 主题组合
+// 1. 现代民族风主题
+$theme-modern-primary: (
+  background: $bg-primary,
+  surface: $bg-secondary,
+  primary: $primary-color,
+  secondary: $secondary-color,
+  accent: $accent-color,
+  text: $text-primary,
+  text-secondary: $text-secondary,
+  border: $border-light,
+  shadow: $shadow-md
+);
+
+// 2. 传统元素主题
+$theme-traditional: (
+  background: $bg-primary,
+  surface: $bg-secondary,
+  primary: $traditional-red,
+  secondary: $traditional-gold,
+  accent: $traditional-blue,
+  text: $text-primary,
+  text-secondary: $text-secondary,
+  border: $border-light,
+  shadow: $shadow-md
+);
+
+// 3. 清新自然主题
+$theme-fresh: (
+  background: $bg-primary,
+  surface: $bg-accent,
+  primary: $accent-color,
+  secondary: $secondary-color,
+  accent: $primary-color,
+  text: $text-primary,
+  text-secondary: $text-secondary,
+  border: $border-light,
+  shadow: $shadow-md
+);
+
+// 颜色应用混合器
+@mixin theme($theme) {
+  background-color: map-get($theme, background);
+  color: map-get($theme, text);
+  border-color: map-get($theme, border);
+  box-shadow: map-get($theme, shadow);
+}
+
+@mixin theme-surface($theme) {
+  background-color: map-get($theme, surface);
+  color: map-get($theme, text);
+  border-color: map-get($theme, border);
+}
+
+@mixin theme-primary($theme) {
+  background-color: map-get($theme, primary);
+  color: $text-inverse;
+}
+
+@mixin theme-secondary($theme) {
+  background-color: map-get($theme, secondary);
+  color: $text-primary;
+}
+
+@mixin theme-accent($theme) {
+  background-color: map-get($theme, accent);
+  color: $text-inverse;
+}
+
+// 渐变背景
+@mixin gradient-bg($start, $end, $direction: 135deg) {
+  background: linear-gradient($direction, $start, $end);
+}
+
+// 民族特色装饰边框
+@mixin traditional-border($width: 2px, $style: solid) {
+  border: $width $style $traditional-red;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: $width $style $traditional-gold;
+    z-index: -1;
+  }
+}
+
+// 民族特色装饰图案
+@mixin traditional-pattern($opacity: 0.1) {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba($traditional-red, $opacity) 0%, transparent 20%),
+    radial-gradient(circle at 80% 60%, rgba($traditional-gold, $opacity) 0%, transparent 20%),
+    radial-gradient(circle at 40% 80%, rgba($traditional-blue, $opacity) 0%, transparent 20%);
+}
+
+// 按钮颜色主题
+$button-themes: (
+  primary: (
+    bg: $primary-color,
+    hover: $primary-dark,
+    text: $text-inverse,
+    border: $primary-color
+  ),
+  secondary: (
+    bg: transparent,
+    hover: $bg-secondary,
+    text: $primary-color,
+    border: $primary-color
+  ),
+  accent: (
+    bg: $accent-color,
+    hover: $accent-dark,
+    text: $text-inverse,
+    border: $accent-color
+  ),
+  ghost: (
+    bg: transparent,
+    hover: rgba($primary-color, 0.1),
+    text: $primary-color,
+    border: transparent
+  ),
+  success: (
+    bg: $success,
+    hover: color.adjust($success, $lightness: -10%),
+    text: $text-inverse,
+    border: $success
+  ),
+  warning: (
+    bg: $warning,
+    hover: color.adjust($warning, $lightness: -10%),
+    text: $text-inverse,
+    border: $warning
+  ),
+  danger: (
+    bg: $danger,
+    hover: color.adjust($danger, $lightness: -10%),
+    text: $text-inverse,
+    border: $danger
+  ),
+  info: (
+    bg: $info,
+    hover: color.adjust($info, $lightness: -10%),
+    text: $text-inverse,
+    border: $info
+  ),
+  outline: (
+    bg: transparent,
+    hover: $primary-color,
+    text: $primary-color,
+    border: $primary-color
+  )
+);
+
+@mixin button-theme($theme) {
+  @if map.has-key($button-themes, $theme) {
+    $colors: map.get($button-themes, $theme);
+    background-color: map.get($colors, bg);
+    color: map.get($colors, text);
+    border-color: map.get($colors, border);
+    
+    &:hover {
+      background-color: map.get($colors, hover);
+      @if $theme == outline {
+        color: map.get($colors, hover);
+      }
+    }
+  } @else {
+    // 默认样式
+    background-color: $primary-color;
+    color: $text-inverse;
+    border-color: $primary-color;
+  }
+}

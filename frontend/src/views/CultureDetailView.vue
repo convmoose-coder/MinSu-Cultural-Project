@@ -84,11 +84,11 @@ const fetchCultureDetail = async () => {
     
     <div v-else-if="culture" class="detail-content">
       <div class="detail-header">
-        <h1>{{ culture.title }}</h1>
+        <h1>{{ culture.title || '未知文化' }}</h1>
         <div class="meta-info">
-          <span class="category-badge">{{ culture.category }}</span>
-          <span class="region-badge">{{ culture.region }}</span>
-          <span class="date">{{ new Date(culture.created_at).toLocaleDateString('zh-CN') }}</span>
+          <span class="category-badge">{{ culture.category || '未分类' }}</span>
+          <span class="region-badge">{{ culture.region || '未知地区' }}</span>
+          <span class="date">{{ culture.created_at ? new Date(culture.created_at).toLocaleDateString('zh-CN') : '未知日期' }}</span>
         </div>
       </div>
       

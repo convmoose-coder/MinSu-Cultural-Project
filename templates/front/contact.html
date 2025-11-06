@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 民俗文化信息管理系统</title>
+    <style>
+        /* 基础样式与首页相同 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .nav-links a.active {
+            color: #3498db;
+            font-weight: 500;
+        }
+        
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-bar input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .search-bar button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* 主内容区域 */
+        main {
+            padding: 40px 0;
+        }
+        
+        .contact-header {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-header h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .contact-header p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* 联系内容 */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        /* 联系表单 */
+        .contact-form-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-form-section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #3498db;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .form-error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        /* 联系信息 */
+        .contact-info-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info-section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-icon {
+            flex: 0 0 40px;
+            height: 40px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .info-content h3 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .info-content p {
+            color: #666;
+            margin-bottom: 5px;
+            line-height: 1.6;
+        }
+        
+        .info-content a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .info-content a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        /* 常见问题 */
+        .faq-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .faq-section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 20px;
+        }
+        
+        .faq-item:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: #3498db;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.7;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* 地图区域 */
+        .map-section {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .map-container {
+            height: 400px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #3498db;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .contact-header {
+                padding: 30px 20px;
+            }
+            
+            .contact-header h1 {
+                font-size: 28px;
+            }
+            
+            .contact-form-section,
+            .contact-info-section,
+            .faq-section,
+            .map-section {
+                padding: 30px 20px;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+        }
+        
+        /* 成功消息 */
+        .success-message {
+            background-color: #2ecc71;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            display: none;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="container nav-container">
+            <a href="/" class="logo">民俗文化管理系统</a>
+            <nav class="nav-links">
+                <a href="/">首页</a>
+                <a href="/list">文化列表</a>
+                <a href="/about">关于我们</a>
+                <a href="/contact" class="active">联系我们</a>
+            </nav>
+            <div class="search-bar">
+                <form action="/search" method="GET">
+                    <input type="text" name="keyword" placeholder="搜索民俗文化...">
+                    <button type="submit">搜索</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- 页面头部 -->
+            <div class="contact-header">
+                <h1>联系我们</h1>
+                <p>有任何问题或建议？请随时与我们联系，我们将尽快回复您。</p>
+            </div>
+            
+            <!-- 联系内容 -->
+            <div class="contact-content">
+                <!-- 联系表单 -->
+                <div class="contact-form-section">
+                    <h2>发送消息</h2>
+                    
+                    {% if success %}
+                    <div class="success-message active">
+                        感谢您的留言！我们将尽快回复您。
+                    </div>
+                    {% endif %}
+                    
+                    <form action="/contact" method="POST">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" value="{{ form_data.name }}" required>
+                            {% if errors.name %}
+                            <div class="form-error">{{ errors.name }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" value="{{ form_data.email }}" required>
+                            {% if errors.email %}
+                            <div class="form-error">{{ errors.email }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">主题</label>
+                            <input type="text" id="subject" name="subject" value="{{ form_data.subject }}" required>
+                            {% if errors.subject %}
+                            <div class="form-error">{{ errors.subject }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" name="message" required>{{ form_data.message }}</textarea>
+                            {% if errors.message %}
+                            <div class="form-error">{{ errors.message }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">发送留言</button>
+                    </form>
+                </div>
+                
+                <!-- 联系信息 -->
+                <div class="contact-info-section">
+                    <h2>联系方式</h2>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">✉</div>
+                        <div class="info-content">
+                            <h3>邮箱</h3>
+                            <p>我们的邮箱全天开放，欢迎随时联系我们</p>
+                            <p><a href="mailto:contact@minsu.com">contact@minsu.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">☎</div>
+                        <div class="info-content">
+                            <h3>电话</h3>
+                            <p>工作时间：周一至周五 9:00-17:00</p>
+                            <p><a href="tel:4001234567">400-123-4567</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <h3>地址</h3>
+                            <p>北京市海淀区中关村南大街5号</p>
+                            <p>北京大学文化产业研究院</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">⌚</div>
+                        <div class="info-content">
+                            <h3>工作时间</h3>
+                            <p>周一至周五：9:00 - 17:00</p>
+                            <p>周六至周日：休息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 地图区域 -->
+            <div class="map-section">
+                <h2>地理位置</h2>
+                <div class="map-container">地图加载中...</div>
+            </div>
+            
+            <!-- 常见问题 -->
+            <div class="faq-section">
+                <h2>常见问题</h2>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">如何提交新的民俗文化资料？</div>
+                        <div class="faq-answer">目前我们主要通过专业团队收集整理民俗文化资料。如果您有珍贵的文化资料想要分享，请通过联系表单提交，我们的编辑团队会进行审核和处理。</div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">我可以在网站上发布原创内容吗？</div>
+                        <div class="faq-answer">暂时不支持用户直接发布原创内容。如果您有优质的原创内容，欢迎通过联系我们的邮箱或电话与我们取得联系，我们会评估是否适合收录到系统中。</div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">如何申请文化资料的商业使用许可？</div>
+                        <div class="faq-answer">如需商业使用平台上的文化资料，请通过联系表单提交申请，说明使用目的、范围和时长。我们的版权团队会评估并回复您的申请。</div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">发现错误或不准确的信息怎么办？</div>
+                        <div class="faq-answer">如果您发现平台上有错误或不准确的信息，请通过联系表单指出具体问题，我们会尽快核实并更正。感谢您对平台内容质量的关注和帮助。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于我们</h3>
+                    <p>致力于收集、整理和展示中国丰富的民俗文化资源，传承和弘扬优秀传统文化。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="/">首页</a></li>
+                        <li><a href="/list">文化列表</a></li>
+                        <li><a href="/about">关于我们</a></li>
+                        <li><a href="/contact">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系方式</h3>
+                    <p>邮箱：contact@minsu.com</p>
+                    <p>电话：400-123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 民俗文化信息管理系统. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ切换功能
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('active');
+            
+            // 更新问题的样式
+            if (answer.classList.contains('active')) {
+                element.style.color = '#3498db';
+            } else {
+                element.style.color = '#2c3e50';
+            }
+        }
+    </script>
+</body>
+</html>

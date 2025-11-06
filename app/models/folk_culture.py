@@ -10,6 +10,7 @@ class FolkCulture(db.Model):
     description = db.Column(db.Text, nullable=False)
     category = db.Column(db.String(100), nullable=False)
     region = db.Column(db.String(100), nullable=False)
+    view_count = db.Column(db.Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
     
@@ -21,5 +22,7 @@ class FolkCulture(db.Model):
             'description': self.description,
             'category': self.category,
             'region': self.region,
-            'created_at': self.created_at.isoformat() if self.created_at else None
+            'view_count': getattr(self, 'view_count', 0),
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }

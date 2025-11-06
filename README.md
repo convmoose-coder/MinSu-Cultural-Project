@@ -1,6 +1,46 @@
 # 中国民俗文化网站
 
+**最后更新时间：2025年11月06日 13:22:21**
+<!-- 此时间会在下次更新时自动更新为本地时间 -->
+
 这是一个展示中国民俗文化的全栈网站，使用Vue 3作为前端框架，Flask作为后端API框架，专注于中国传统民俗文化的展示与传播。
+
+## 🚀 最新功能更新
+
+### 安全机制增强
+- ✅ **前后端分离安全机制**：实现用户端前台和管理后台的完全分离
+- ✅ **独立端口部署**：前台服务(5173)和管理后台服务(5174)独立运行
+- ✅ **Referer验证中间件**：防止直接通过URL访问管理后台API
+- ✅ **JWT令牌认证**：管理员身份验证和权限控制
+
+### 管理后台功能
+- ✅ **管理员登录/注册系统**：完整的身份验证流程
+- ✅ **数据仪表盘**：统计信息展示和数据分析
+- ✅ **批量上传功能**：支持文化数据的批量导入
+- ✅ **安全密码管理**：密码哈希存储和修改功能
+
+### 用户体验优化
+- ✅ **首页性能优化**：修复页面异常抖动问题，提升加载速度
+- ✅ **图片加载优化**：修复默认图片路径问题，确保图片正确显示
+- ✅ **错误处理改进**：增强组件的错误处理机制，提高应用稳定性
+
+## 技术细节与问题解决
+
+### 首页异常抖动问题修复
+
+**问题描述**：首页在加载过程中出现明显的异常抖动现象，影响用户体验。
+
+**解决方案**：
+1. **路径别名问题修复**：修正了`defaultImages.js`中使用`@`别名的图片路径，将其改为以`/src/assets/images/`开头的相对路径，确保Vite能够正确解析静态资源。
+2. **图片错误处理优化**：完善了`HomeView.vue`和`FolkCultureCard.vue`组件中的图片加载错误处理逻辑，确保当图片加载失败时能够正确显示占位图。
+3. **组件生命周期修复**：修复了`HomeView.vue`中`onMounted`和`onUnmounted`钩子函数的语法错误，确保滚动事件监听器能够正确添加和移除。
+
+### 关键技术点
+
+1. **Vue 3 Composition API**：充分利用Composition API的优势，提高代码的可读性和可维护性。
+2. **响应式数据处理**：使用Vue 3的响应式系统处理复杂的用户交互和数据展示。
+3. **Vite构建优化**：针对Vite的特性优化资源配置，提升开发和生产环境的构建效率。
+4. **错误边界处理**：建立完善的错误处理机制，提升应用的健壮性。
 
 ## 项目结构
 
@@ -82,26 +122,68 @@ cd frontend
 npm install
 ```
 
-2. 启动前端开发服务器：
+2. 启动用户端前台服务：
 
 ```bash
 npm run dev
 ```
 
-前端服务将在 http://localhost:5173 上运行。
+用户端前台服务将在 http://localhost:5173 上运行。
+
+3. 启动管理后台服务（新终端）：
+
+```bash
+npm run dev:admin
+```
+
+管理后台服务将在 http://localhost:5174 上运行。
+
+### 常见问题解决
+
+如果遇到图片无法加载或页面异常抖动的问题，请检查以下几点：
+
+1. 确保`src/assets/images/defaultImages.js`文件中的图片路径格式正确，应该使用相对路径而非别名：
+   ```javascript
+   // 正确的写法
+   region: '/src/assets/images/placeholder-region.jpg'
+   
+   // 错误的写法
+   region: '@/assets/images/placeholder-region.jpg'
+   ```
+
+2. 如果修改了图片路径后仍未解决问题，请重启开发服务器：
+   ```bash
+   # 在frontend目录下
+   npm run dev
+   ```
 
 ## API接口
 
-### 民俗文化相关
+### 用户端前台API (前缀: /api)
 
 - `GET /api/folkcultures` - 获取所有民俗文化列表（支持分页、搜索和筛选）
 - `GET /api/folkcultures/<id>` - 获取指定ID的民俗文化详情
-- `POST /api/folkcultures` - 创建新的民俗文化记录
 - `GET /api/regions` - 获取所有地区列表
 - `GET /api/categories` - 获取所有分类列表
 
+### 管理后台API (前缀: /api/admin)
+
+#### 认证相关
+- `POST /api/admin/auth/login` - 管理员登录
+- `POST /api/admin/auth/register` - 管理员注册
+- `POST /api/admin/auth/refresh` - 刷新JWT令牌
+- `POST /api/admin/auth/change-password` - 修改管理员密码
+
+#### 数据管理
+- `GET /api/admin/dashboard` - 获取仪表盘数据
+- `GET /api/admin/dashboard/stats` - 获取统计信息
+- `GET /api/admin/dashboard/recent` - 获取最近数据
+- `GET /api/admin/dashboard/distribution/<type>` - 获取数据分布
+- `POST /api/admin/batch-upload` - 批量上传文化数据
+
 ## 功能特点
 
+### 用户端前台
 - 民俗文化展示与浏览
 - 按地区和分类筛选查看
 - 搜索功能，支持关键词搜索
@@ -109,6 +191,15 @@ npm run dev
 - 响应式设计，适配各种设备
 - 中国传统风格UI设计，展现民俗文化特色
 - 加载动画和错误处理机制
+
+### 管理后台
+- 管理员身份认证系统（登录/注册/令牌刷新）
+- 数据仪表盘和统计分析
+- 文化数据批量上传功能
+- 安全密码管理和修改
+- 前后端分离安全机制
+- Referer验证防止直接API访问
+- JWT令牌认证和权限控制
 
 ## 核心功能模块
 

@@ -1,0 +1,290 @@
+// 导入主题颜色
+@use './theme.scss' as *;
+
+// 基础变量
+$font-family-base: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+$font-family-chinese: 'STZhongsong', 'FangSong', 'KaiTi', serif;
+$font-family-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+
+// 字体大小
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-2xl: 24px;
+$font-size-3xl: 30px;
+$font-size-4xl: 36px;
+$font-size-5xl: 48px;
+
+// 行高
+$line-height-tight: 1.25;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.75;
+
+// 间距
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+$spacing-3xl: 64px;
+
+// 圆角
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// 过渡动画
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// 断点
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-2xl: 1400px;
+
+// Z-index层级
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// 容器最大宽度
+$container-max-width: 1200px;
+
+// 导航高度
+$navbar-height: 70px;
+$navbar-height-mobile: 60px;
+
+// 卡片样式
+$card-padding: $spacing-lg;
+$card-border-radius: $border-radius-lg;
+$card-shadow: $shadow-md;
+$card-hover-shadow: $shadow-lg;
+
+// 按钮样式
+$button-padding-sm: $spacing-xs $spacing-sm;
+$button-padding-md: $spacing-sm $spacing-md;
+$button-padding-lg: $spacing-md $spacing-lg;
+$button-border-radius: $border-radius-full;
+$button-font-weight: 500;
+$button-transition: $transition-base;
+
+// 输入框样式
+$input-padding: $spacing-sm $spacing-md;
+$input-border-radius: $border-radius-md;
+$input-border-color: $border-light;
+$input-focus-border-color: $primary-color;
+$input-shadow: $shadow-sm;
+
+// 表格样式
+$table-cell-padding: $spacing-sm $spacing-md;
+$table-border-color: $border-light;
+$table-header-bg: $bg-secondary;
+$table-hover-bg: $bg-secondary;
+
+// 模态框样式
+$modal-padding: $spacing-2xl;
+$modal-border-radius: $border-radius-lg;
+$modal-shadow: $shadow-xl;
+$modal-backdrop: rgba(0, 0, 0, 0.5);
+
+// 工具类混合器
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin absolute-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-ellipsis-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 2xl {
+    @media (max-width: #{$breakpoint-2xl - 1px}) {
+      @content;
+    }
+  }
+}
+
+// 民族特色装饰
+@mixin chinese-pattern {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23E63946' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    z-index: -1;
+  }
+}
+
+// 卡片样式
+@mixin card {
+  background-color: $bg-primary;
+  border-radius: $card-border-radius;
+  box-shadow: $card-shadow;
+  padding: $card-padding;
+  transition: $transition-base;
+  
+  &:hover {
+    box-shadow: $card-hover-shadow;
+    transform: translateY(-2px);
+  }
+}
+
+// 按钮样式
+@mixin button($theme: primary) {
+  padding: $button-padding-md;
+  border-radius: $button-border-radius;
+  font-weight: $button-font-weight;
+  transition: $button-transition;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  @include button-theme($theme);
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// 输入框样式
+@mixin input {
+  padding: $input-padding;
+  border-radius: $input-border-radius;
+  border: 1px solid $input-border-color;
+  background-color: $bg-primary;
+  transition: $transition-base;
+  
+  &:focus {
+    outline: none;
+    border-color: $input-focus-border-color;
+    box-shadow: $shadow-sm;
+  }
+  
+  &::placeholder {
+    color: $text-disabled;
+  }
+}
+
+// 容器样式
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @include responsive(md) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+// 动画关键帧
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

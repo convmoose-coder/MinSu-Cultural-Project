@@ -1,3 +1,3 @@
-from app.routes.folk_culture_routes import folk_culture_bp
+from app.routes.folk_culture_routes import public_bp
 
-__all__ = ['folk_culture_bp']
+__all__ = ['public_bp']

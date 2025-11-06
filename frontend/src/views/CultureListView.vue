@@ -32,9 +32,9 @@ const filteredCultures = computed(() => {
     const query = searchQuery.value.toLowerCase()
     logger.debug('应用搜索过滤', { query })
     result = result.filter(culture => 
-      culture.title.toLowerCase().includes(query) ||
-      culture.description.toLowerCase().includes(query) ||
-      culture.region.toLowerCase().includes(query)
+      (culture.title && culture.title.toLowerCase().includes(query)) ||
+      (culture.description && culture.description.toLowerCase().includes(query)) ||
+      (culture.region && culture.region.toLowerCase().includes(query))
     )
   }
   

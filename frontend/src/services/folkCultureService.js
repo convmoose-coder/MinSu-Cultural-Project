@@ -22,8 +22,18 @@ function sanitizeData(data) {
   return sanitized;
 }
 
+// 根据当前环境确定API基础URL
+const getBaseURL = () => {
+  // 如果是管理后台环境（端口5174），使用完整URL
+  if (window.location.port === '5174') {
+    return 'http://127.0.0.1:5000/api';
+  }
+  // 否则使用相对路径
+  return '/api';
+};
+
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: getBaseURL(),
   headers: {
     'Content-Type': 'application/json'
   }

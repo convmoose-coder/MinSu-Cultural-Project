@@ -1,186 +1,374 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <nav>
-      <h1>传统文化</h1>
-      <ul>
-        <li><RouterLink to="/">首页</RouterLink></li>
-        <li><RouterLink to="/culture">民俗文化</RouterLink></li>
-        <li><RouterLink to="/regions">地区分类</RouterLink></li>
-        <li><RouterLink to="/about">关于我们</RouterLink></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <main>
-    <RouterView />
-  </main>
-  
-  <footer>
-    <p>&copy; 2025 传统文化网. 保留所有权利.</p>
-  </footer>
+  <div class="app-container">
+    <header class="app-header" v-motion-slide-visible-once-bottom>
+      <div class="container">
+        <div class="header-content">
+          <div class="logo-container">
+            <router-link to="/" class="logo">
+              <span class="logo-text" v-motion-slide-visible-once-right>民俗文化</span>
+            </router-link>
+          </div>
+          
+          <nav class="main-nav">
+            <ul class="nav-list">
+              <li class="nav-item" v-for="item in navItems" :key="item.path">
+                <router-link :to="item.path" class="nav-link" v-motion-slide-visible-once-bottom>
+                  {{ item.name }}
+                </router-link>
+              </li>
+            </ul>
+          </nav>
+          
+          <div class="header-actions">
+            <el-button type="primary" class="search-btn" v-motion-slide-visible-once-right>
+              <el-icon><Search /></el-icon>
+              搜索
+            </el-button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="decorative-line"></div>
+    </header>
+
+    <main class="app-main">
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+
+    <footer class="app-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>关于我们</h3>
+            <p>致力于传承和弘扬中华优秀传统文化，让民俗文化走进现代生活。</p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>快速链接</h3>
+            <ul class="footer-links">
+              <li><router-link to="/">首页</router-link></li>
+              <li><router-link to="/culture">民俗文化</router-link></li>
+              <li><router-link to="/regions">地区浏览</router-link></li>
+              <li><router-link to="/about">关于我们</router-link></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>联系我们</h3>
+            <p>邮箱：contact@minsu.com</p>
+            <p>电话：400-123-4567</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; {{ currentYear }} 民俗文化平台. 保留所有权利.</p>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- 回到顶部按钮 -->
+    <Transition name="fade">
+      <el-button 
+        v-if="showBackToTop"
+        type="primary"
+        circle
+        class="back-to-top"
+        @click="scrollToTop"
+      >
+        <el-icon><ArrowUp /></el-icon>
+      </el-button>
+    </Transition>
+  </div>
 </template>
 
-<style>
-/* 全局样式重置 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { Search, Menu, ArrowUp } from '@element-plus/icons-vue'
+
+const router = useRouter()
+const isScrolled = ref(false)
+const showBackToTop = ref(false)
+const isMenuOpen = ref(false)
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+  showBackToTop.value = window.scrollY > 300
 }
 
-/* 基础样式 - 中国风字体设置 */
-body {
-  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'SimSun', serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #faf7f0;
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
 }
 
-/* 头部导航 - 中国传统红色系 */
-header {
-  background-color: #C8102E;
-  color: white;
-  padding: 1.25rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  z-index: 100;
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
 }
 
-/* 装饰性元素 - 中国传统花纹 */
-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background-image: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(255, 255, 255, 0.8) 20%, 
-    rgba(255, 255, 255, 0.8) 80%, 
-    transparent 100%);
+const navigateTo = (path) => {
+  router.push(path)
+  isMenuOpen.value = false
 }
 
-/* 导航容器样式 */
-nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+// 导航菜单项
+const navItems = ref([
+  { name: '首页', path: '/' },
+  { name: '民俗文化', path: '/culture' },
+  { name: '地区浏览', path: '/regions' },
+  { name: '关于我们', path: '/about' }
+])
+
+// 当前年份
+const currentYear = computed(() => new Date().getFullYear())
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+</script>
+
+<style lang="scss" scoped>
+// 导入主题变量
+@import './assets/styles/variables.scss';
+@import './assets/styles/theme.scss';
+
+.app-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $bg-primary;
 }
 
-/* 网站标题 - 中国风书法风格 */
-nav h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  font-family: 'STZhongsong', 'FangSong', serif;
-}
-
-/* 导航列表 */
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-}
-
-/* 导航链接 - 中国传统设计 */
-nav a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: all 0.3s;
-  position: relative;
-  padding: 0.5rem 0;
-  font-weight: 500;
-}
-
-/* 导航链接悬停效果 */
-nav a:hover {
-  color: #ffd700;
-}
-
-/* 导航链接下方装饰线 */
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #ffd700;
-  transition: width 0.3s ease;
-}
-
-/* 导航链接悬停时显示装饰线 */
-nav a:hover::after {
-  width: 100%;
-}
-
-/* 主内容区域 */
-main {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  min-height: 70vh;
-}
-
-/* 页脚 - 传统暗色系 */
-footer {
-  background-color: #2c1e1e;
-  color: #e8d4b4;
-  text-align: center;
-  padding: 2rem 0;
-  margin-top: 3rem;
-  position: relative;
-}
-
-/* 页脚装饰元素 */
-footer::before {
-  content: '';
-  position: absolute;
+.app-header {
+  background-color: $bg-primary;
+  box-shadow: $shadow-sm;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-image: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(232, 212, 180, 0.5) 20%, 
-    rgba(232, 212, 180, 0.5) 80%, 
-    transparent 100%);
+  z-index: $z-index-fixed;
+  transition: all $transition-base;
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    
+    @media (max-width: 768px) {
+      height: 60px;
+      flex-wrap: wrap;
+    }
+  }
+  
+  .logo-container {
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: $primary-color;
+        text-decoration: none;
+      
+      img {
+        height: 40px;
+        margin-right: 10px;
+        
+        @media (max-width: 768px) {
+          height: 30px;
+        }
+      }
+      
+      .logo-text {
+        font-family: 'STKaiti', 'KaiTi', serif;
+        
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+  }
+  
+  .main-nav {
+    @media (max-width: 768px) {
+      order: 3;
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    .nav-list {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
+      @media (max-width: 768px) {
+        justify-content: center;
+      }
+      
+      .nav-item {
+        margin: 0 15px;
+        
+        @media (max-width: 768px) {
+          margin: 0 10px;
+        }
+        
+        .nav-link {
+          color: $text-secondary;
+          text-decoration: none;
+          font-weight: 500;
+          padding: 8px 0;
+          border-bottom: 2px solid transparent;
+          transition: $transition-base;
+          
+          &:hover, &.router-link-active {
+            color: $primary-color;
+            border-bottom-color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+  
+  .header-actions {
+    .search-btn {
+      border-radius: 20px;
+      
+      @media (max-width: 768px) {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+    }
+  }
+  
+  .decorative-line {
+    height: 4px;
+    background: linear-gradient(90deg, 
+      $primary-color 0%, 
+      $success 50%, 
+      $warning 100%);
+  }
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-  header {
-    padding: 1rem 0;
+.app-main {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.app-footer {
+  background-color: $bg-secondary;
+  color: $text-inverse;
+  padding: 40px 0 20px;
+  margin-top: auto;
+  
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+    
+    .footer-section {
+    h3 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: $text-inverse;
+        position: relative;
+        padding-bottom: 8px;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 30px;
+          height: 2px;
+          background-color: $primary-color;
+        }
+    }
+      
+      p {
+          margin-bottom: 10px;
+          line-height: $line-height-normal;
+          color: rgba(255, 255, 255, 0.7);
+        }
+      
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        
+        li {
+          margin-bottom: 8px;
+          
+          a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: $transition-base;
+            
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
   }
   
-  nav {
-    flex-direction: column;
-    gap: 1rem;
+  .footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid $border-medium;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+  }
+}
+
+// 页面过渡动画
+.page-enter-active,
+.page-leave-active {
+  transition: opacity $transition-base, transform $transition-base;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+// 回到顶部按钮
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: $z-index-fixed;
+  box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba($primary-color, 0.4);
   }
   
-  nav h1 {
-    font-size: 1.6rem;
+  @media (max-width: 768px) {
+    bottom: 20px;
+    right: 20px;
   }
-  
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  nav a {
-    font-size: 1rem;
-    padding: 0.3rem 0;
-  }
+}
+
+// 淡入淡出过渡动画
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $transition-base;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

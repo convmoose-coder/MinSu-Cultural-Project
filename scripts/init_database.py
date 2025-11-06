@@ -7,7 +7,8 @@
 import os
 from flask import Flask
 from app.utils.db import db, init_db
-from app.models.folk_culture import FolkCulture  # 导入所有模型，确保SQLAlchemy能识别它们
+from app.models.folk_culture import FolkCulture
+from app.models.admin_user import AdminUser  # 导入所有模型，确保SQLAlchemy能识别它们
 
 def create_tables():
     """创建数据库表"""
