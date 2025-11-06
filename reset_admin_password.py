@@ -3,22 +3,19 @@
 重置管理员用户密码脚本
 """
 
-from flask import Flask
-from werkzeug.security import generate_password_hash
+from application import create_app
+from application.models.admin_user import AdminUser
+from application.utils.db import db
 
 # 创建临时Flask应用来初始化数据库
-app = Flask(__name__)
+app = create_app()
 
 # 配置数据库连接
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Fzy025897758.@8.138.227.227:3306/MinSu'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # 初始化数据库
-from app.utils.db import db
 db.init_app(app)
-
-# 导入模型
-from app.models.admin_user import AdminUser
 
 def reset_admin_password():
     """重置管理员用户密码"""

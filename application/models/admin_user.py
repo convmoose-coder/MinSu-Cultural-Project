@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.utils.db import db
+from application.utils.db import db
 
 class AdminUser(db.Model):
     """管理员用户模型"""

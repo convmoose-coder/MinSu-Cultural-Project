@@ -138,21 +138,28 @@ cd ..
 使用Gunicorn启动后端服务：
 
 ```bash
-# 安装Gunicorn
-pip install gunicorn
+# 安装Gunicorn和项目依赖
+pip install gunicorn pandas openpyxl
 
-# 启动后端服务
-gunicorn -w 4 -b 0.0.0.0:5000 app:app --daemon
+# 启动后端服务（推荐使用应用工厂模式）
+gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()" --daemon
 ```
 
 或者使用PM2管理：
 
 ```bash
-# 安装Gunicorn
-pip install gunicorn
+# 安装Gunicorn和项目依赖
+pip install gunicorn pandas openpyxl
 
-# 使用PM2启动后端服务
-pm2 start "gunicorn -w 4 -b 0.0.0.0:5000 app:app" --name "minsu-backend"
+# 使用PM2启动后端服务（推荐使用应用工厂模式）
+pm2 start "gunicorn -w 4 -b 0.0.0.0:5000 \"app:create_app()\"" --name "minsu-backend"
+```
+
+> 注意：我们推荐使用应用工厂模式 (`app:create_app()`) 来启动应用，这种方式更加稳定且符合最佳实践。如果你的环境不支持这种模式，也可以使用传统的启动方式：
+> 
+> ```bash
+> gunicorn -w 4 -b 0.0.0.0:5000 app:app --daemon
+> ```
 ```
 
 ### 8. 前端服务部署

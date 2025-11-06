@@ -6,13 +6,14 @@
 """
 import os
 import sys
-from flask import Flask
 
-# 将项目根目录添加到Python路径
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# 添加项目根目录到Python路径
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from application import create_app
+from application.models.admin_user import AdminUser
+from application.utils.db import db
 from werkzeug.security import generate_password_hash
-from app.utils.db import db, init_db
-from app.models.admin_user import AdminUser  # 导入管理员用户模型
 
 def init_admin_user():
     """初始化管理员用户表并添加默认用户"""

@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
-from app.models.folk_culture import FolkCulture
-from app.schemas.folk_culture import FolkCultureCreate
-from app.utils.db import db
+from application.models.folk_culture import FolkCulture
+from application.schemas.folk_culture import FolkCultureCreate
+from application.utils.db import db
 from sqlalchemy import desc, or_
 import random
 from datetime import datetime

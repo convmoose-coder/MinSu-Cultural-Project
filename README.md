@@ -34,7 +34,7 @@
 
 ```
 MinSu/
-├── app/                          # 后端Flask应用程序
+├── application/                   # 后端Flask应用程序
 │   ├── __init__.py               # 应用初始化文件
 │   ├── models/                   # 数据模型定义
 │   │   ├── __init__.py
@@ -306,10 +306,10 @@ npm run dev:admin
 
 ### 后端开发
 
-1. 添加新的数据模型：在`app/models/`目录下创建新的模型文件
-2. 添加新的API路由：在`app/routes/`目录下定义新的路由函数
-3. 实现业务逻辑：在`app/services/`目录下创建对应的服务
-4. 数据验证：在`app/schemas/`目录下定义请求和响应模式
+1. 添加新的数据模型：在`application/models/`目录下创建新的模型文件
+2. 添加新的API路由：在`application/routes/`目录下定义新的路由函数
+3. 实现业务逻辑：在`application/services/`目录下创建对应的服务
+4. 数据验证：在`application/schemas/`目录下定义请求和响应模式
 
 ### 前端开发
 

@@ -1,8 +1,8 @@
 import os
 import sys
-from app.utils.db import db, init_db
-from app import create_app
-from app.models.folk_culture import FolkCulture
+from application.utils.db import db, init_db
+from application import create_app
+from application.models.folk_culture import FolkCulture
 
 # 创建Flask应用
 app = create_app()

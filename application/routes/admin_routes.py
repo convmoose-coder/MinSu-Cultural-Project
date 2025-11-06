@@ -6,9 +6,9 @@ import pandas as pd
 from io import BytesIO
 from datetime import datetime, timedelta
 import os
-from app.models.admin_user import AdminUser
-from app.utils.db import db
-from app.services.folk_culture_service import FolkCultureService
+from application.models.admin_user import AdminUser
+from application.utils.db import db
+from application.services.folk_culture_service import FolkCultureService
 
 # 创建admin蓝图
 admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')

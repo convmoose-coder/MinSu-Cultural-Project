@@ -1,4 +1,4 @@
-from app import create_app
+from application import create_app
 
 # 创建应用实例（保持向后兼容）
 app = create_app()

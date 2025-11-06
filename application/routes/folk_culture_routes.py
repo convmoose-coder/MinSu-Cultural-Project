@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from app.services.folk_culture_service import FolkCultureService
-from app.schemas.folk_culture import FolkCultureCreate
+from application.services.folk_culture_service import FolkCultureService
+from application.schemas.folk_culture import FolkCultureCreate
 
 # 创建前台路由蓝图（游客专用）
 public_bp = Blueprint('public', __name__, url_prefix='/api')

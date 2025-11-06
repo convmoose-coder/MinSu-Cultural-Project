@@ -1,5 +1,5 @@
 from datetime import datetime
-from app.utils.db import db
+from application.utils.db import db
 
 class FolkCulture(db.Model):
     """民俗文化模型"""

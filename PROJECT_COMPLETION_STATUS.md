@@ -65,7 +65,7 @@
 
 ```
 MinSu/
-├── app/                    # 后端Flask应用程序
+├── application/            # 后端Flask应用程序
 ├── frontend/              # 前端Vue.js应用程序
 ├── scripts/               # 数据库初始化和管理脚本
 ├── templates/             # 传统HTML模板（备用方案）

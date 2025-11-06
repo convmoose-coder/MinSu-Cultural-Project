@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from app.utils.db import db, init_db
-from app.routes.admin_routes import admin_bp
-from app.routes.folk_culture_routes import public_bp
-from app.routes.front_routes import register_front_routes
+from application.utils.db import db, init_db
+from application.routes.admin_routes import admin_bp
+from application.routes.folk_culture_routes import public_bp
+from application.routes.front_routes import register_front_routes
 
 def create_app():
     """应用工厂函数，用于创建和配置Flask应用实例"""

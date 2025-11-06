@@ -4,13 +4,15 @@
 数据库表结构更新脚本
 用于添加缺失的view_count列
 """
-import os
 import sys
+import os
+
 # 添加项目根目录到Python路径
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from flask import Flask
-from app.utils.db import db, init_db
-from app.models.folk_culture import FolkCulture
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from application import create_app
+from application.models.folk_culture import FolkCulture
+from application.utils.db import db
 from sqlalchemy import text
 
 def update_database():

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify
-from app.services.folk_culture_service import FolkCultureService
+from application.services.folk_culture_service import FolkCultureService
 
 # 创建前台路由蓝图
 front_bp = Blueprint('front', __name__, url_prefix='/')
