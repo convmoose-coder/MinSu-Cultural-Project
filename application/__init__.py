@@ -1,22 +1,28 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from application.utils.db import db, init_db
-from application.routes.admin_routes import admin_bp
-from application.routes.folk_culture_routes import public_bp
-from application.routes.front_routes import register_front_routes
+from config import Config
+from .utils.db import db, init_db
+from .routes.admin_routes import admin_bp
+from .routes.folk_culture_routes import public_bp
+from .routes.front_routes import register_front_routes
+import os
 
 def create_app():
-    """应用工厂函数，用于创建和配置Flask应用实例"""
-    app = Flask(__name__)
+    # 创建Flask应用实例，指定模板目录
+    app = Flask(__name__, template_folder='../templates')
     
     # 加载配置
-    app.config.from_object('config')
+    app.config.from_object(Config)
+    
+    # 从环境变量加载数据库URI（如果存在）
+    database_url = os.environ.get('DATABASE_URL')
+    if database_url:
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     
     # 初始化扩展
     CORS(app)
     JWTManager(app)
-    db.init_app(app)
     
     # 注册蓝图
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
@@ -27,7 +33,7 @@ def create_app():
     
     # 初始化数据库
     with app.app_context():
-        init_db()
+        init_db(app)
     
     # 健康检查端点
     @app.route('/health')

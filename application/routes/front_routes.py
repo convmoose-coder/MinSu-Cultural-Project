@@ -246,7 +246,7 @@ def register_front_routes(app):
     @app.errorhandler(404)
     def page_not_found(e):
         # 获取推荐文化和分类数据用于错误页面展示
-        from app.services.folk_culture_service import FolkCultureService
+        from application.services.folk_culture_service import FolkCultureService
         
         # 获取推荐文化（限制数量，避免加载过多）
         recommended_cultures = FolkCultureService.get_recommended_cultures(6)
