@@ -104,6 +104,76 @@ SECRET_KEY=your_production_secret_key_here
 JWT_SECRET_KEY=your_production_jwt_secret_key_here
 ```
 
+#### 解决数据库连接问题
+
+如果您遇到类似 `pymysql.err.OperationalError: (1045, "Access denied for user 'root'@'localhost' (using password: NO)")` 的错误，请按照以下步骤排查：
+
+1. **检查环境变量是否正确加载**
+   ```bash
+   # 在项目根目录下检查环境变量
+   cat .env
+   
+   # 确认环境变量已被正确设置
+   echo $MYSQL_HOST
+   echo $MYSQL_USER
+   echo $MYSQL_PASSWORD
+   ```
+
+2. **验证数据库用户权限**
+   ```bash
+   # 登录MySQL验证用户权限
+   mysql -u $MYSQL_USER -p
+   
+   # 在MySQL中检查用户权限
+   SHOW GRANTS FOR CURRENT_USER();
+   ```
+
+3. **测试数据库连接**
+   ```bash
+   # 使用Python测试数据库连接
+   python -c "
+   import os
+   from sqlalchemy import create_engine
+   
+   # 读取环境变量
+   host = os.environ.get('MYSQL_HOST', 'localhost')
+   port = os.environ.get('MYSQL_PORT', '3306')
+   user = os.environ.get('MYSQL_USER', 'root')
+   password = os.environ.get('MYSQL_PASSWORD', '')
+   database = os.environ.get('MYSQL_DATABASE', 'test')
+   
+   # 打印连接信息（注意不要在生产环境中打印密码）
+   print(f'Host: {host}')
+   print(f'Port: {port}')
+   print(f'User: {user}')
+   print(f'Database: {database}')
+   
+   # 尝试连接数据库
+   try:
+       engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}')
+       connection = engine.connect()
+       print('数据库连接成功！')
+       connection.close()
+   except Exception as e:
+       print(f'数据库连接失败: {e}')
+   "
+   ```
+
+4. **常见的解决方法**
+   - 确保 `.env` 文件中的 `MYSQL_USER` 和 `MYSQL_PASSWORD` 与MySQL中创建的用户和密码一致
+   - 如果使用 `root` 用户，请确保其可以从 `localhost` 连接
+   - 检查MySQL用户是否具有正确的权限：
+     ```sql
+     -- 授予所有权限（仅用于开发环境）
+     GRANT ALL PRIVILEGES ON MinSu.* TO 'your_user'@'localhost';
+     
+     -- 或者授予特定权限（推荐用于生产环境）
+     GRANT SELECT, INSERT, UPDATE, DELETE ON MinSu.* TO 'your_user'@'localhost';
+     
+     -- 刷新权限
+     FLUSH PRIVILEGES;
+     ```
+
 ### 5. 数据库初始化
 
 ```bash

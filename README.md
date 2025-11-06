@@ -230,6 +230,15 @@ npm run dev:admin
    npm run dev
    ```
 
+3. 数据库连接问题：
+   - 使用专门的数据库连接测试工具诊断问题：
+     ```bash
+     python test_db_connection.py
+     ```
+   - 检查环境变量配置是否正确
+   - 确认MySQL用户权限设置
+   - 查看DEPLOYMENT_LINUX.md文件中的详细解决方案
+
 ## API接口
 
 ### 用户端前台API (前缀: /api)
@@ -323,40 +332,55 @@ npm run dev:admin
 ## 部署
 
 ### 前端构建
+1. 构建用户端前台：
+   ```bash
+   cd frontend
+   npm run build
+   ```
 
-```bash
-cd frontend
-npm run build
-```
-
-构建产物将生成在`frontend/dist`目录中。
+2. 构建管理后台：
+   ```bash
+   cd frontend
+   npm run build:admin
+   ```
 
 ### 后端部署
+1. 安装依赖：
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. 使用Gunicorn部署（推荐）：
+2. 设置环境变量（参考 `.env.example` 文件）
+   
+   在Linux服务器上，请确保正确配置数据库连接信息：
+   ```bash
+   # 创建 .env 文件并根据实际情况修改以下配置
+   cp .env.example .env
+   nano .env  # 或使用其他文本编辑器编辑
+   
+   # 确保设置了正确的数据库凭据
+   MYSQL_HOST=localhost           # Linux服务器上的数据库主机
+   MYSQL_PORT=3306               # 数据库端口
+   MYSQL_USER=your_linux_user    # Linux服务器上的数据库用户名
+   MYSQL_PASSWORD=your_password  # 对应用户的数据库密码
+   MYSQL_DATABASE=MinSu          # 数据库名称
+   SECRET_KEY=your_secret_key    # Flask密钥，应更改为强随机字符串
+   ```
 
-```bash
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
+3. 初始化数据库：
+   ```bash
+   python init_db.py
+   ```
 
-2. 也可以使用Docker容器化部署，创建Dockerfile：
+4. 创建初始管理员账户：
+   ```bash
+   python create_test_admin.py
+   ```
 
-```dockerfile
-FROM python:3.9-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
-
-EXPOSE 5000
-
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
-```
-
+5. 运行应用：
+   ```bash
+   python app.py
+   ```
 ### Linux服务器部署
 
 详细部署指南请参考 [DEPLOYMENT_LINUX.md](DEPLOYMENT_LINUX.md) 文件，其中包含了完整的Linux服务器部署步骤，包括：
