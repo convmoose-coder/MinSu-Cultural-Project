@@ -1,6 +1,6 @@
 # 民族文化展示项目
 
-**最后更新时间：2025年11月06日 13:22:21**
+**最后更新时间：2025年11月06日 18:12:45**
 <!-- 此时间会在下次更新时自动更新为本地时间 -->
 
 ## 项目状态
@@ -32,24 +32,83 @@
 
 ## 项目结构
 
-- `app/` - 后端Flask应用程序
-  - `models/` - 数据模型
-  - `routes/` - API路由
-  - `services/` - 业务逻辑
-  - `schemas/` - 数据验证模式
-  - `utils/` - 工具函数
-- `frontend/` - 前端Vue.js应用程序
-  - `src/` - 源代码
-    - `views/` - 页面组件
-    - `components/` - 可复用组件
-    - `assets/` - 静态资源
-    - `router/` - 路由配置
-    - `stores/` - 状态管理
-    - `services/` - API服务
-    - `composables/` - 组合式函数
-  - `src/admin/` - 管理后台
-- `scripts/` - 数据库初始化和管理脚本
-- `templates/` - 传统HTML模板（备用方案）
+```
+MinSu/
+├── app/                          # 后端Flask应用程序
+│   ├── __init__.py               # 应用初始化文件
+│   ├── models/                   # 数据模型定义
+│   │   ├── __init__.py
+│   │   ├── admin_user.py         # 管理员用户模型
+│   │   └── folk_culture.py       # 民俗文化数据模型
+│   ├── routes/                   # API路由配置
+│   │   ├── __init__.py
+│   │   ├── admin_routes.py       # 管理后台API路由
+│   │   ├── folk_culture_routes.py# 民俗文化相关API路由
+│   │   └── front_routes.py       # 前台API路由
+│   ├── schemas/                  # 数据验证模式
+│   │   ├── __init__.py
+│   │   └── folk_culture.py       # 民俗文化数据验证模式
+│   ├── services/                 # 业务逻辑层
+│   │   ├── __init__.py
+│   │   └── folk_culture_service.py# 民俗文化业务逻辑实现
+│   └── utils/                    # 后端工具函数
+│       ├── __init__.py
+│       └── db.py                 # 数据库连接工具
+├── frontend/                     # 前端Vue.js应用程序
+│   ├── src/                      # 前端源代码
+│   │   ├── App.vue               # 前台主应用组件
+│   │   ├── AdminApp.vue          # 后台管理主应用组件
+│   │   ├── main.js               # 前台应用入口文件
+│   │   ├── admin-main.js         # 后台管理应用入口文件
+│   │   ├── assets/               # 静态资源文件
+│   │   │   ├── images/           # 图片资源
+│   │   │   ├── styles/           # 样式文件
+│   │   │   └── ...               # 其他静态资源
+│   │   ├── components/           # 可复用UI组件
+│   │   │   ├── FolkCultureCard.vue # 民俗文化卡片组件
+│   │   │   ├── CustomButton.vue    # 自定义按钮组件
+│   │   │   ├── LoadingSpinner.vue  # 加载动画组件
+│   │   │   └── admin/              # 后台管理专用组件
+│   │   ├── views/                # 页面组件
+│   │   │   ├── HomeView.vue      # 首页
+│   │   │   ├── CultureListView.vue# 民俗文化列表页
+│   │   │   ├── CultureDetailView.vue# 民俗文化详情页
+│   │   │   ├── AboutView.vue     # 关于页面
+│   │   │   └── admin/            # 后台管理页面组件
+│   │   ├── router/               # 路由配置
+│   │   │   ├── index.js          # 前台路由配置
+│   │   │   └── admin/            # 后台路由配置
+│   │   ├── stores/               # 状态管理(Pinia)
+│   │   │   ├── folkCultureStore.js # 民俗文化状态管理
+│   │   │   └── admin/            # 后台状态管理
+│   │   ├── services/             # API服务封装
+│   │   │   ├── folkCultureService.js # 民俗文化相关服务
+│   │   │   ├── api.js            # 通用API封装
+│   │   │   └── admin/            # 后台API服务
+│   │   ├── api/                  # API请求定义
+│   │   │   ├── frontendApi.js    # 前台API实例
+│   │   │   ├── adminApi.js       # 后台API实例
+│   │   │   ├── culture.js        # 民俗文化API定义
+│   │   │   └── index.js          # API索引文件
+│   │   ├── composables/          # 组合式函数
+│   │   │   └── useDataFetching.js # 数据获取组合式函数
+│   │   ├── utils/                # 前端工具函数
+│   │   └── types/                # TypeScript类型定义
+│   ├── package.json              # Node.js依赖配置
+│   ├── vite.config.js            # 前台构建配置
+│   └── vite.admin.config.js      # 后台构建配置
+├── scripts/                      # 数据库和系统管理脚本
+│   ├── init_database.py          # 数据库初始化脚本
+│   ├── init_admin_user.py        # 管理员用户初始化脚本
+│   └── ...                       # 其他管理脚本
+├── templates/                    # 传统HTML模板（备用方案）
+│   └── front/                    # 前台传统页面模板
+├── requirements.txt              # Python依赖包列表
+├── app.py                        # Flask应用主文件
+├── create_test_admin.py         # 测试管理员创建脚本
+├── init_db.py                   # 数据库初始化脚本
+└── ...                          # 其他配置和文档文件
+```
 
 ## 技术栈
 
@@ -98,11 +157,33 @@ MYSQL_DATABASE=MinSu
 
 3. 启动后端服务：
 
+### 开发环境启动
+
 ```bash
 python app.py
 ```
 
 后端服务将在 http://localhost:5000 上运行。
+
+### 生产环境部署（使用Gunicorn）
+
+安装Gunicorn：
+
+```bash
+pip install gunicorn
+```
+
+使用Gunicorn启动应用：
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+或者使用应用工厂模式：
+
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
+```
 
 #### 前端设置
 
