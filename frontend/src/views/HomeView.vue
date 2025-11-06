@@ -66,18 +66,18 @@ const fetchCultures = async () => {
 // 获取地区数据
 const fetchRegions = async () => {
   try {
-    const response = await getRegions({ limit: 6 })
+    const response = await getRegions()
     // 处理API返回的地区名称数组，转换为组件需要的对象格式
     if (Array.isArray(response.data)) {
-      regions.value = response.data.map((name, index) => ({
+      regions.value = response.data.slice(0, 6).map((name, index) => ({
         id: index + 1,
         name: name || '未知地区',
         culture_count: 0 // 实际项目中应该从API获取准确的数量
       }))
     } else {
-      regions.value = response.data?.data || []
+      regions.value = response.data?.data?.slice(0, 6) || []
     }
-    stats.value.regionCount = response.data?.total || regions.value.length
+    stats.value.regionCount = response.data?.length || regions.value.length
   } catch (error) {
     console.error('获取地区数据失败:', error)
     // 使用模拟数据作为后备
