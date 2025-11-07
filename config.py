@@ -8,5 +8,9 @@ class Config:
     MYSQL_USER = os.environ.get('MYSQL_USER') or 'root'
     MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD') or ''
     MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE') or 'test'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}"
+    SQLALCHEMY_DATABASE_URI = (
+        f"mysql://{os.getenv('MYSQL_USER')}:{os.getenv('MYSQL_PASSWORD')}@"
+        f"{os.getenv('MYSQL_HOST')}/{os.getenv('MYSQL_DATABASE')}"
+        "?connect_timeout=60"  # 关键：添加超时参数
+    )    
     SQLALCHEMY_TRACK_MODIFICATIONS = False

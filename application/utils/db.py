@@ -19,7 +19,7 @@ def init_db(app: Flask):
         mysql_port = os.getenv('MYSQL_PORT', '3306')
         mysql_user = os.getenv('MYSQL_USER', 'root')
         mysql_password = os.getenv('MYSQL_PASSWORD', '')
-        mysql_database = os.getenv('MYSQL_DATABASE', 'minsu_db')
+        mysql_database = os.getenv('MYSQL_DATABASE', 'MinSu')
         db_url = f'mysql+pymysql://{mysql_user}:{mysql_password}@{mysql_host}:{mysql_port}/{mysql_database}'
     
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
