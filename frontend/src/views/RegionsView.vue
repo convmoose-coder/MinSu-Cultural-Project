@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import FolkCultureService from '../services/folkCultureService'
+import { folkCultureApi } from '@/api/culture'
 import FolkCultureCard from '../components/FolkCultureCard.vue'
 import { createLogger } from '../utils/logger'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
@@ -28,11 +28,11 @@ const error = ref('')
 
 // 使用自定义Hook处理加载状态
 const { data: regionsData, loading: loadingRegions, error: regionsError, refetch: refetchRegions } = useDataFetching(
-  FolkCultureService.getRegions
+  folkCultureApi.getRegions
 )
 
 const { data: culturesData, loading: loadingCultures } = useDataFetching(
-  () => FolkCultureService.getCultures(),
+  () => folkCultureApi.getCultures(),
   { autoFetch: false }
 )
 

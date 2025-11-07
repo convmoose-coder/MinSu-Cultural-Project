@@ -7,7 +7,7 @@ export const frontendRoutes = [
     name: 'home',
     component: HomeView,
     meta: {
-      title: '首页 - 民俗文化展示系统',
+      title: '首页',
       requiresAuth: false
     }
   },

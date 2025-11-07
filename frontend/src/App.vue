@@ -263,7 +263,7 @@ onUnmounted(() => {
 }
 
 .app-footer {
-  background-color: $bg-secondary;
+  background-color: $gray-800;
   color: $text-inverse;
   padding: 40px 0 20px;
   margin-top: auto;
@@ -296,7 +296,7 @@ onUnmounted(() => {
       p {
           margin-bottom: 10px;
           line-height: $line-height-normal;
-          color: rgba(255, 255, 255, 0.7);
+          color: rgba(255, 255, 255, 0.85);
         }
       
       .footer-links {
@@ -307,7 +307,7 @@ onUnmounted(() => {
           margin-bottom: 8px;
           
           a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             transition: $transition-base;
             
@@ -323,8 +323,8 @@ onUnmounted(() => {
   .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid $border-medium;
-    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 14px;
   }
 }

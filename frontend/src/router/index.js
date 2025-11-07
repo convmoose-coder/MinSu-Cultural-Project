@@ -20,12 +20,6 @@ router.beforeEach((to, from, next) => {
     document.title = '民俗文化展示系统'
   }
   
-  // 阻止直接访问管理后台路径
-  if (to.path.startsWith('/admin')) {
-    // 重定向到首页，不显示管理后台页面
-    return next('/')
-  }
-  
   next()
 })
 

@@ -1,10 +1,9 @@
-// 默认图片配置
+// 默认图片资源
 const defaultImages = {
-  culture: '/admin/src/assets/images/placeholder-culture.jpg',
-  region: '/admin/src/assets/images/placeholder-region.jpg',
-  category: '/admin/src/assets/images/placeholder-category.jpg',
-  user: '/admin/src/assets/images/placeholder-user.jpg',
-  logo: '/admin/src/assets/images/logo.png'
+  // 前台默认图片
+  cultureCover: '/src/assets/images/culture-default-cover.jpg',
+  avatar: '/src/assets/images/default-avatar.png',
+  folkCulture: '/src/assets/images/folk-culture-bg.jpg'
 }
 
 export default defaultImages

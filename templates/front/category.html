@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category }} - 民俗文化分类 - 民俗文化信息管理系统</title>
+    <title>{{ category }} - 民俗文化分类 - 乘灼</title>
     <style>
         /* 基础样式与首页相同 */
         * {
@@ -327,9 +327,9 @@
         
         /* 页脚样式 */
         footer {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 40px 0;
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 40px 0 20px 0;
             margin-top: 60px;
         }
         
@@ -340,19 +340,21 @@
         }
         
         .footer-logo h3 {
-            font-size: 24px;
+            font-size: 18px;
             margin-bottom: 20px;
+            color: #ffffff;
         }
         
         .footer-logo p {
             font-size: 14px;
             line-height: 1.6;
-            color: #bdc3c7;
+            color: #e9ecef;
         }
         
         .footer-links h4 {
             font-size: 18px;
             margin-bottom: 20px;
+            color: #ffffff;
         }
         
         .footer-links ul {
@@ -364,22 +366,21 @@
         }
         
         .footer-links ul li a {
-            color: #bdc3c7;
+            color: #e9ecef;
             text-decoration: none;
             transition: color 0.3s ease;
         }
         
         .footer-links ul li a:hover {
-            color: #3498db;
+            color: #ffffff;
         }
         
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 20px;
             margin-top: 30px;
-            border-top: 1px solid #34495e;
-            font-size: 14px;
-            color: #bdc3c7;
+            border-top: 1px solid #495057;
+            color: #e9ecef;
         }
         
         /* 响应式设计 */
@@ -420,7 +421,7 @@
     <!-- 头部导航 -->
     <header>
         <div class="container nav-container">
-            <a href="/" class="logo">民俗文化管理系统</a>
+            <a href="/" class="logo">民俗文化展示系统</a>
             <nav class="nav-links">
                 <a href="/" class="nav-item">首页</a>
                 <a href="/list" class="nav-item">文化列表</a>
@@ -556,7 +557,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h3>民俗文化管理系统</h3>
+                    <h3>民俗文化展示系统</h3>
                     <p>致力于保护、传承和弘扬中华优秀传统文化，让更多人了解和感受民俗文化的魅力。</p>
                 </div>
                 <div class="footer-links">
@@ -580,7 +581,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; {{ current_year or 2023 }} 民俗文化管理系统 版权所有</p>
+                <p>&copy; {{ current_year or 2023 }} 民俗文化展示系统 版权所有</p>
             </div>
         </div>
     </footer>

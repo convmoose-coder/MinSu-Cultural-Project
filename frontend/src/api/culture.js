@@ -3,12 +3,12 @@ import apiClient from './index'
 
 // 获取民俗文化列表
 export function getFolkCultures(params = {}) {
-  return apiClient.get('/folkcultures', { params })
+  return apiClient.get('/folk-culture', { params })
 }
 
 // 获取民俗文化详情
 export function getFolkCultureById(id) {
-  return apiClient.get(`/folkcultures/${id}`)
+  return apiClient.get(`/folk-culture/${id}`)
 }
 
 // 搜索民俗文化

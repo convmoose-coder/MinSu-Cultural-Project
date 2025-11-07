@@ -7,11 +7,11 @@
 
 ✅ **项目已完成** - 所有核心功能和安全机制已实现并通过测试验证
 
-本项目已按计划完成所有功能开发，包括前后端分离架构、安全机制、用户端前台、管理后台等核心模块。项目具备完整的部署文档和测试验证报告，可以投入实际使用。
+本项目已按计划完成所有功能开发，包括前后端分离架构、安全机制、用户端前台等核心模块。项目具备完整的部署文档和测试验证报告，可以投入实际使用。
 
 ## 项目简介
 
-这是一个完整的民族文化展示系统，采用前后端分离架构，包含用户端前台和管理后台两部分。项目融合了中国传统元素与现代Web技术，为用户提供沉浸式的民族文化体验。
+这是一个完整的民族文化展示系统，采用前后端分离架构，包含用户端前台。项目融合了中国传统元素与现代Web技术，为用户提供沉浸式的民族文化体验。
 
 ## 最新功能更新
 
@@ -21,10 +21,6 @@
 - **错误处理改进**：增强了错误处理机制，提升系统稳定性
 
 ### 技术细节与问题解决
-- **图片路径问题修复**：
-  - 修复了管理后台所有默认图片路径配置问题
-  - 添加了正确的`/admin`前缀以适配Vite的资源处理机制
-  - 修复了所有类型图片（culture, region, category, user, logo）的加载问题
 - **关键技术点**：
   - Vue 3 Composition API
   - 响应式数据处理
@@ -39,11 +35,9 @@ MinSu/
 │   ├── __init__.py               # 应用初始化文件
 │   ├── models/                   # 数据模型定义
 │   │   ├── __init__.py
-│   │   ├── admin_user.py         # 管理员用户模型
 │   │   └── folk_culture.py       # 民俗文化数据模型
 │   ├── routes/                   # API路由配置
 │   │   ├── __init__.py
-│   │   ├── admin_routes.py       # 管理后台API路由
 │   │   ├── folk_culture_routes.py# 民俗文化相关API路由
 │   │   └── front_routes.py       # 前台API路由
 │   ├── schemas/                  # 数据验证模式
@@ -58,9 +52,7 @@ MinSu/
 ├── frontend/                     # 前端Vue.js应用程序
 │   ├── src/                      # 前端源代码
 │   │   ├── App.vue               # 前台主应用组件
-│   │   ├── AdminApp.vue          # 后台管理主应用组件
 │   │   ├── main.js               # 前台应用入口文件
-│   │   ├── admin-main.js         # 后台管理应用入口文件
 │   │   ├── assets/               # 静态资源文件
 │   │   │   ├── images/           # 图片资源
 │   │   │   ├── styles/           # 样式文件
@@ -69,26 +61,20 @@ MinSu/
 │   │   │   ├── FolkCultureCard.vue # 民俗文化卡片组件
 │   │   │   ├── CustomButton.vue    # 自定义按钮组件
 │   │   │   ├── LoadingSpinner.vue  # 加载动画组件
-│   │   │   └── admin/              # 后台管理专用组件
 │   │   ├── views/                # 页面组件
 │   │   │   ├── HomeView.vue      # 首页
 │   │   │   ├── CultureListView.vue# 民俗文化列表页
 │   │   │   ├── CultureDetailView.vue# 民俗文化详情页
 │   │   │   ├── AboutView.vue     # 关于页面
-│   │   │   └── admin/            # 后台管理页面组件
 │   │   ├── router/               # 路由配置
-│   │   │   ├── index.js          # 前台路由配置
-│   │   │   └── admin/            # 后台路由配置
+│   │   │   └── index.js          # 前台路由配置
 │   │   ├── stores/               # 状态管理(Pinia)
-│   │   │   ├── folkCultureStore.js # 民俗文化状态管理
-│   │   │   └── admin/            # 后台状态管理
+│   │   │   └── folkCultureStore.js # 民俗文化状态管理
 │   │   ├── services/             # API服务封装
 │   │   │   ├── folkCultureService.js # 民俗文化相关服务
-│   │   │   ├── api.js            # 通用API封装
-│   │   │   └── admin/            # 后台API服务
+│   │   │   └── api.js            # 通用API封装
 │   │   ├── api/                  # API请求定义
 │   │   │   ├── frontendApi.js    # 前台API实例
-│   │   │   ├── adminApi.js       # 后台API实例
 │   │   │   ├── culture.js        # 民俗文化API定义
 │   │   │   └── index.js          # API索引文件
 │   │   ├── composables/          # 组合式函数
@@ -96,17 +82,14 @@ MinSu/
 │   │   ├── utils/                # 前端工具函数
 │   │   └── types/                # TypeScript类型定义
 │   ├── package.json              # Node.js依赖配置
-│   ├── vite.config.js            # 前台构建配置
-│   └── vite.admin.config.js      # 后台构建配置
+│   └── vite.config.js            # 前台构建配置
 ├── scripts/                      # 数据库和系统管理脚本
 │   ├── init_database.py          # 数据库初始化脚本
-│   ├── init_admin_user.py        # 管理员用户初始化脚本
 │   └── ...                       # 其他管理脚本
 ├── templates/                    # 传统HTML模板（备用方案）
 │   └── front/                    # 前台传统页面模板
 ├── requirements.txt              # Python依赖包列表
 ├── app.py                        # Flask应用主文件
-├── create_test_admin.py         # 测试管理员创建脚本
 ├── init_db.py                   # 数据库初始化脚本
 └── ...                          # 其他配置和文档文件
 ```
@@ -119,7 +102,7 @@ MinSu/
 - MySQL 8.0+ 数据库
 - SQLAlchemy ORM
 - Pydantic 数据验证
-- JWT 身份认证
+
 
 ### 前端
 - Vue 3 (Composition API)
@@ -203,14 +186,6 @@ npm run dev
 
 用户端前台服务将在 http://localhost:5173 上运行。
 
-3. 启动管理后台服务（新终端）：
-
-```bash
-npm run dev:admin
-```
-
-管理后台服务将在 http://localhost:5174 上运行。
-
 ### 常见问题解决
 
 如果遇到图片无法加载或页面异常抖动的问题，请检查以下几点：
@@ -248,21 +223,6 @@ npm run dev:admin
 - `GET /api/regions` - 获取所有地区列表
 - `GET /api/categories` - 获取所有分类列表
 
-### 管理后台API (前缀: /api/admin)
-
-#### 认证相关
-- `POST /api/admin/auth/login` - 管理员登录
-- `POST /api/admin/auth/register` - 管理员注册
-- `POST /api/admin/auth/refresh` - 刷新JWT令牌
-- `POST /api/admin/auth/change-password` - 修改管理员密码
-
-#### 数据管理
-- `GET /api/admin/dashboard` - 获取仪表盘数据
-- `GET /api/admin/dashboard/stats` - 获取统计信息
-- `GET /api/admin/dashboard/recent` - 获取最近数据
-- `GET /api/admin/dashboard/distribution/<type>` - 获取数据分布
-- `POST /api/admin/batch-upload` - 批量上传文化数据
-
 ## 功能特点
 
 ### 用户端前台
@@ -273,15 +233,6 @@ npm run dev:admin
 - 响应式设计，适配各种设备
 - 中国传统风格UI设计，展现民俗文化特色
 - 加载动画和错误处理机制
-
-### 管理后台
-- 管理员身份认证系统（登录/注册/令牌刷新）
-- 数据仪表盘和统计分析
-- 文化数据批量上传功能
-- 安全密码管理和修改
-- 前后端分离安全机制
-- Referer验证防止直接API访问
-- JWT令牌认证和权限控制
 
 ## 核心功能模块
 
@@ -338,12 +289,6 @@ npm run dev:admin
    npm run build
    ```
 
-2. 构建管理后台：
-   ```bash
-   cd frontend
-   npm run build:admin
-   ```
-
 ### 后端部署
 1. 安装依赖：
    ```bash
@@ -372,10 +317,7 @@ npm run dev:admin
    python init_db.py
    ```
 
-4. 创建初始管理员账户：
-   ```bash
-   python create_test_admin.py
-   ```
+
 
 5. 运行应用：
    ```bash

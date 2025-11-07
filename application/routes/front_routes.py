@@ -239,8 +239,6 @@ def register_api_routes(app):
 def register_front_routes(app):
     """注册前台路由"""
     app.register_blueprint(front_bp)
-    # 注册API路由
-    register_api_routes(app)
     
     # 注册404错误处理
     @app.errorhandler(404)

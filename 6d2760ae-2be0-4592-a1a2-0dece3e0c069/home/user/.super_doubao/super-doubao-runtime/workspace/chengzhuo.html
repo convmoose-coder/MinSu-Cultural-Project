@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乘灼文化 - 传承千年文化，展现民族风情</title>
+    <meta name="description" content="乘灼文化致力于传承和发扬中华各民族优秀传统文化，展示丰富多彩的民族文化和地区风情。">
+    <meta name="keywords" content="中华文化,民族文化,传统文化,地区风情,文化传承">
+    
+    <!-- 外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 自定义配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B7355',
+                        secondary: '#A8B5A3',
+                        accent: '#D4B5A0',
+                        background: '#F5F2EE',
+                        text: '#333333',
+                    },
+                    fontFamily: {
+                        chinese: ['PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .bg-gradient-warm {
+                background: linear-gradient(135deg, #F5F2EE 0%, #E8E1D1 100%);
+            }
+            .transition-custom {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+    </style>
+    
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        /* 基础动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+        .animate-slide-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 水墨效果 */
+        .water-ink {
+            position: relative;
+            overflow: hidden;
+        }
+        .water-ink::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="waterInk"><feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="1"/><feDisplacementMap in="SourceGraphic" scale="5"/></filter></defs><rect width="100" height="100" filter="url(%23waterInk)" fill="none" stroke="%238B7355" stroke-width="0.5"/></svg>') repeat;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5F2EE;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B7355;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6B5A45;
+        }
+        
+        /* 响应式字体大小 */
+        @media (max-width: 640px) {
+            .text-responsive {
+                font-size: clamp(1rem, 4vw, 1.25rem);
+            }
+            .text-responsive-lg {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+            }
+        }
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .text-responsive {
+                font-size: clamp(1.125rem, 3vw, 1.5rem);
+            }
+            .text-responsive-lg {
+                font-size: clamp(2rem, 5vw, 3rem);
+            }
+        }
+        @media (min-width: 1025px) {
+            .text-responsive {
+                font-size: clamp(1.25rem, 2vw, 1.75rem);
+            }
+            .text-responsive-lg {
+                font-size: clamp(2.5rem, 4vw, 4rem);
+            }
+        }
+    </style>
+</head>
+<body class="font-chinese bg-background text-text min-h-screen">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/95 backdrop-blur-sm shadow-md">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-lg">乘</span>
+                </div>
+                <h1 class="text-xl font-bold text-primary">乘灼文化</h1>
+            </div>
+            
+            <!-- 桌面端菜单 -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-text hover:text-primary transition-colors duration-300">首页</a>
+                <a href="#cultures" class="nav-link text-text hover:text-primary transition-colors duration-300">民族文化</a>
+                <a href="#regions" class="nav-link text-text hover:text-primary transition-colors duration-300">地区风情</a>
+                <a href="#gallery" class="nav-link text-text hover:text-primary transition-colors duration-300">文化展示</a>
+                <a href="#contact" class="nav-link text-text hover:text-primary transition-colors duration-300">联系我们</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button class="md:hidden text-text hover:text-primary" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </nav>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden bg-background border-t border-gray-200 animate-fade-in hidden">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="py-2 text-text hover:text-primary transition-colors duration-300" onclick="toggleMobileMenu()">首页</a>
+                <a href="#cultures" class="py-2 text-text hover:text-primary transition-colors duration-300" onclick="toggleMobileMenu()">民族文化</a>
+                <a href="#regions" class="py-2 text-text hover:text-primary transition-colors duration-300" onclick="toggleMobileMenu()">地区风情</a>
+                <a href="#gallery" class="py-2 text-text hover:text-primary transition-colors duration-300" onclick="toggleMobileMenu()">文化展示</a>
+                <a href="#contact" class="py-2 text-text hover:text-primary transition-colors duration-300" onclick="toggleMobileMenu()">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <main>
+        <!-- 首页英雄区域 -->
+        <section id="home" class="pt-24 pb-16 relative overflow-hidden water-ink">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="animate-slide-left">
+                        <h2 class="text-responsive-lg font-bold text-primary mb-6 leading-tight">
+                            传承千年文化<br>
+                            <span class="text-secondary">展现民族风情</span>
+                        </h2>
+                        <p class="text-lg mb-8 text-gray-600 leading-relaxed">
+                            探索中华各民族丰富多彩的文化遗产，感受不同地区独特的风土人情。
+                            从传统艺术到现代创新，让我们一起传承和发扬中华文化的瑰宝。
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button class="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                                开始探索
+                            </button>
+                            <button class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-3 rounded-full transition-all duration-300">
+                                了解更多
+                            </button>
+                        </div>
+                    </div>
+                    <div class="animate-slide-right">
+                        <div class="relative">
+                            <div class="w-full h-96 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-3xl p-8 animate-float">
+                                <img src="https://aka.doubaocdn.com/s/31rK1vS8BE" alt="传统文化背景" class="w-full h-full object-cover rounded-2xl shadow-xl">
+                            </div>
+                            <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-accent/20 rounded-full blur-xl"></div>
+                            <div class="absolute -top-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-xl"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 民族文化区域 -->
+        <section id="cultures" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4">民族文化</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        中华56个民族，每个民族都有其独特的文化传统和艺术表现形式
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 藏族文化 -->
+                    <div class="group bg-background rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/1036/600/400" alt="藏族文化" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-xl font-bold">藏族文化</h4>
+                                <p class="text-sm opacity-90">雪域高原的神秘文化</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 mb-4">
+                                藏族文化源远流长，包括藏传佛教、唐卡艺术、藏戏等丰富的文化遗产。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                了解详情 <i class="fa fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 彝族文化 -->
+                    <div class="group bg-background rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/1043/600/400" alt="彝族文化" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-xl font-bold">彝族文化</h4>
+                                <p class="text-sm opacity-90">火的民族，热情奔放</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 mb-4">
+                                彝族拥有丰富的火把节文化、彝族年、毕摩文化等独特的民族传统。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                了解详情 <i class="fa fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 傣族文化 -->
+                    <div class="group bg-background rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://picsum.photos/id/1039/600/400" alt="傣族文化" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-xl font-bold">傣族文化</h4>
+                                <p class="text-sm opacity-90">水的民族，柔情似水</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <p class="text-gray-600 mb-4">
+                                傣族以泼水节、傣剧、孔雀舞等文化特色闻名，展现了热带雨林民族的独特魅力。
+                            </p>
+                            <button class="text-primary hover:text-primary/80 font-medium flex items-center">
+                                了解详情 <i class="fa fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 地区风情区域 -->
+        <section id="regions" class="py-20 bg-gradient-warm">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4">地区风情</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        从江南水乡到塞北草原，从东海之滨到西域边疆，感受中华大地的地域文化魅力
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://aka.doubaocdn.com/s/4VDB1vS8BD" alt="中式建筑" class="w-full h-80 object-cover rounded-2xl shadow-xl">
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-bold text-primary mb-6">地域文化的多样性</h4>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-home text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg mb-2">江南水乡</h5>
+                                    <p class="text-gray-600">温婉柔情的水乡文化，小桥流水人家的诗意生活</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-tree text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg mb-2">塞北草原</h5>
+                                    <p class="text-gray-600">豪放不羁的草原文化，马背上的民族风情</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fa fa-anchor text-primary text-xl"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg mb-2">岭南文化</h5>
+                                    <p class="text-gray-600">开放包容的海洋文化，中西合璧的独特魅力</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文化展示区域 -->
+        <section id="gallery" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4">文化展示</h3>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        丰富多彩的文化艺术作品展示，感受传统文化的魅力与现代创新的活力
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-square">
+                        <img src="https://picsum.photos/id/1040/600/600" alt="传统艺术" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h4 class="font-bold">传统绘画</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-square">
+                        <img src="https://picsum.photos/id/1041/600/600" alt="民间工艺" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h4 class="font-bold">民间工艺</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-square">
+                        <img src="https://picsum.photos/id/1042/600/600" alt="民族服饰" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h4 class="font-bold">民族服饰</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative overflow-hidden rounded-xl shadow-lg aspect-square">
+                        <img src="https://picsum.photos/id/1043/600/600" alt="传统建筑" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h4 class="font-bold">传统建筑</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们区域 -->
+        <section id="contact" class="py-20 bg-background">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4">联系我们</h3>
+                        <p class="text-gray-600 max-w-2xl mx-auto">
+                            如果您对中华文化感兴趣，或者想了解更多关于各民族文化的信息，欢迎与我们联系
+                        </p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <div>
+                            <form class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">姓名</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的姓名">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">邮箱</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的邮箱">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">感兴趣的文化</label>
+                                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300">
+                                        <option>请选择...</option>
+                                        <option>藏族文化</option>
+                                        <option>彝族文化</option>
+                                        <option>傣族文化</option>
+                                        <option>蒙古族文化</option>
+                                        <option>其他民族文化</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">留言</label>
+                                    <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的留言"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
+                                    发送留言
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                                <h4 class="text-xl font-bold text-primary mb-6">联系方式</h4>
+                                
+                                <div class="space-y-6">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <i class="fa fa-phone text-primary text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium">电话</h5>
+                                            <p class="text-gray-600">+86 123 4567 8901</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <i class="fa fa-envelope text-primary text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium">邮箱</h5>
+                                            <p class="text-gray-600">info@chengzhuo-culture.com</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                            <i class="fa fa-map-marker text-primary text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-medium">地址</h5>
+                                            <p class="text-gray-600">北京市朝阳区文化街123号</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-8">
+                                    <h5 class="font-medium mb-4">关注我们</h5>
+                                    <div class="flex space-x-4">
+                                        <a href="#" class="w-10 h-10 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300">
+                                            <i class="fa fa-weixin text-primary hover:text-white"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300">
+                                            <i class="fa fa-weibo text-primary hover:text-white"></i>
+                                        </a>
+                                        <a href="#" class="w-10 h-10 bg-primary/10 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all duration-300">
+                                            <i class="fa fa-qq text-primary hover:text-white"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-primary font-bold text-lg">乘</span>
+                        </div>
+                        <h3 class="text-xl font-bold">乘灼文化</h3>
+                    </div>
+                    <p class="text-white/80 mb-6">
+                        致力于传承和发扬中华各民族优秀传统文化，促进文化交流与创新。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white/80 hover:text-white transition-colors duration-300">
+                            <i class="fa fa-weixin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors duration-300">
+                            <i class="fa fa-weibo text-xl"></i>
+                        </a>
+                        <a href="#" class="text-white/80 hover:text-white transition-colors duration-300">
+                            <i class="fa fa-qq text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">快速导航</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-white/80 hover:text-white transition-colors duration-300">首页</a></li>
+                        <li><a href="#cultures" class="text-white/80 hover:text-white transition-colors duration-300">民族文化</a></li>
+                        <li><a href="#regions" class="text-white/80 hover:text-white transition-colors duration-300">地区风情</a></li>
+                        <li><a href="#gallery" class="text-white/80 hover:text-white transition-colors duration-300">文化展示</a></li>
+                        <li><a href="#contact" class="text-white/80 hover:text-white transition-colors duration-300">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">民族文化</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors duration-300">藏族文化</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors duration-300">彝族文化</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors duration-300">傣族文化</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors duration-300">蒙古族文化</a></li>
+                        <li><a href="#" class="text-white/80 hover:text-white transition-colors duration-300">更多民族</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">联系信息</h4>
+                    <ul class="space-y-3">
+                        <li class="text-white/80 flex items-center">
+                            <i class="fa fa-phone mr-2"></i>
+                            +86 123 4567 8901
+                        </li>
+                        <li class="text-white/80 flex items-center">
+                            <i class="fa fa-envelope mr-2"></i>
+                            info@chengzhuo-culture.com
+                        </li>
+                        <li class="text-white/80 flex items-center">
+                            <i class="fa fa-map-marker mr-2"></i>
+                            北京市朝阳区文化街123号
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-12 pt-8 text-center text-white/60">
+                <p>&copy; 2025 乘灼文化. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 滚动动画观察器
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有需要动画的元素
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('bg-background/95', 'backdrop-blur-sm', 'shadow-md');
+            } else {
+                header.classList.remove('bg-background/95', 'backdrop-blur-sm', 'shadow-md');
+            }
+        });
+
+        // 表单提交处理
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的留言！我们会尽快回复您。');
+            this.reset();
+        });
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加页面加载动画
+            document.body.classList.add('animate-fade-in');
+            
+            // 延迟显示各个元素
+            setTimeout(() => {
+                document.querySelectorAll('.animate-slide-left, .animate-slide-right').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

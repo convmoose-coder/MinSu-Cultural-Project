@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import FolkCultureService from '../services/folkCultureService'
+import { folkCultureApi } from '@/api/frontendApi'
 import LoadingSpinner from '../components/LoadingSpinner.vue'
 import { createLogger } from '../utils/logger'
 
@@ -27,16 +27,27 @@ const handleRetry = () => {
   fetchCultureDetail()
 }
 
+// 监听路由变化，当ID改变时重新获取数据
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    if (newId !== oldId) {
+      logger.info('路由参数ID发生变化，重新获取文化详情', { oldId, newId });
+      fetchCultureDetail()
+    }
+  }
+)
+
 onMounted(() => {
   logger.info('组件已挂载，开始获取文化详情');
   fetchCultureDetail()
 })
 
 const fetchCultureDetail = async () => {
-  const id = route.params.id as string
-  logger.debug('开始获取文化详情', { id });
+  const cultureId = route.params.id as string
+  logger.debug('开始获取文化详情', { cultureId });
   
-  if (!id) {
+  if (!cultureId) {
     logger.warn('未提供文化ID，无法获取详情');
     return
   }
@@ -46,11 +57,11 @@ const fetchCultureDetail = async () => {
   const startTime = performance.now();
   
   try {
-    logger.info('调用API获取文化详情', { id });
-    const response = await FolkCultureService.getCultureById(id)
+    logger.info('调用API获取文化详情', { cultureId });
+    const response = await folkCultureApi.getFolkCultureDetail(cultureId)
     const endTime = performance.now();
     logger.info('成功获取文化详情', { 
-      id, 
+      cultureId, 
       title: response?.data?.title, 
       responseTime: `${(endTime - startTime).toFixed(2)}ms` 
     });
@@ -58,7 +69,7 @@ const fetchCultureDetail = async () => {
   } catch (err) {
     const endTime = performance.now();
     logger.error('获取文化详情失败', { 
-      id, 
+      cultureId, 
       error: err, 
       responseTime: `${(endTime - startTime).toFixed(2)}ms` 
     });

@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-本项目是一个前后端分离的民俗文化展示系统，包含用户端前台和管理后台两个独立的前端应用，以及一个后端API服务。
+本项目是一个前后端分离的民俗文化展示系统，包含用户端前台和一个后端API服务。
 
 ### 项目架构
 
@@ -10,11 +10,7 @@
    - 访问地址：http://localhost:5173/
    - 提供民俗文化信息展示功能
 
-2. **管理后台** (端口5174)
-   - 访问地址：http://localhost:5174/admin/
-   - 提供管理后台功能，包括数据管理、统计分析等
-
-3. **后端API服务** (端口5000)
+2. **后端API服务** (端口5000)
    - API地址：http://localhost:5000/
    - 提供RESTful API接口
 
@@ -100,8 +96,7 @@ FLASK_APP=app.py
 # 应用密钥 (请更改为安全的随机字符串)
 SECRET_KEY=your_production_secret_key_here
 
-# JWT密钥 (请更改为安全的随机字符串)
-JWT_SECRET_KEY=your_production_jwt_secret_key_here
+
 ```
 
 #### 解决数据库连接问题
@@ -179,9 +174,6 @@ JWT_SECRET_KEY=your_production_jwt_secret_key_here
 ```bash
 # 初始化数据库表
 python scripts/init_database.py
-
-# 初始化管理员用户
-python scripts/init_admin_user.py
 ```
 
 ### 6. 前端构建
@@ -195,9 +187,6 @@ npm install
 
 # 构建用户端前台
 npm run build
-
-# 构建管理后台
-npm run build:admin
 
 # 返回项目根目录
 cd ..
@@ -242,9 +231,6 @@ cd frontend
 
 # 启动用户端前台服务
 pm2 start "npm run preview" --name "minsu-frontend"
-
-# 启动管理后台服务
-pm2 start "npm run preview:admin" --name "minsu-admin"
 ```
 
 ### 9. Nginx配置
@@ -265,14 +251,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    # 管理后台
-    location /admin/ {
-        proxy_pass http://localhost:5174/admin/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
+    
 
     # API服务
     location /api/ {
@@ -345,9 +324,6 @@ pm2 restart minsu-backend
 
 # 重启用户端前台
 pm2 restart minsu-frontend
-
-# 重启管理后台
-pm2 restart minsu-admin
 ```
 
 ### 停止服务
@@ -358,7 +334,7 @@ pm2 stop all
 
 # 停止特定服务
 pm2 stop minsu-backend
-```
+pm2 stop minsu-frontend
 
 ## 故障排除
 
@@ -385,9 +361,8 @@ pm2 stop minsu-backend
 tail -f /path/to/gunicorn/access.log
 tail -f /path/to/gunicorn/error.log
 
-# 查看前端日志
+# 查看前端服务日志
 pm2 logs minsu-frontend
-pm2 logs minsu-admin
 
 # 查看Nginx日志
 tail -f /var/log/nginx/access.log

@@ -1,5 +1,5 @@
 import { reactive, readonly } from 'vue'
-import { FolkCultureService } from '../services/folkCultureService'
+import { folkCultureApi } from '@/api/culture'
 
 // 状态对象
 const state = reactive({
@@ -29,7 +29,7 @@ export const folkCultureStore = {
     state.error = null
     
     try {
-      const response = await FolkCultureService.getCultures()
+      const response = await folkCultureApi.getCultures()
       state.folkCultures = response.data
     } catch (err) {
       state.error = err
@@ -48,7 +48,7 @@ export const folkCultureStore = {
     state.error = null
     
     try {
-      const response = await FolkCultureService.getCultureById(id)
+      const response = await folkCultureApi.getCultureById(id)
       state.currentCulture = response.data
     } catch (err) {
       state.error = err
@@ -67,7 +67,7 @@ export const folkCultureStore = {
     state.error = null
     
     try {
-      const result = await FolkCultureService.createCulture(data)
+      const result = await folkCultureApi.createCulture(data)
       // 创建成功后重新加载数据
       await this.loadAllFolkCultures()
       return result
@@ -85,7 +85,7 @@ export const folkCultureStore = {
    */
   async loadRegions() {
     try {
-      const response = await FolkCultureService.getRegions()
+      const response = await folkCultureApi.getRegions()
       state.regions = response.data
     } catch (err) {
       console.error('加载地区数据失败:', err)
@@ -97,7 +97,7 @@ export const folkCultureStore = {
    */
   async loadCategories() {
     try {
-      const response = await FolkCultureService.getCategories()
+      const response = await folkCultureApi.getCategories()
       state.categories = response.data
     } catch (err) {
       console.error('加载分类数据失败:', err)

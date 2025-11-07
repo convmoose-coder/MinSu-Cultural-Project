@@ -34,13 +34,13 @@ apiClient.interceptors.response.use(
 // API接口
 export const folkCultureApi = {
   // 获取所有民俗文化
-  getAll: () => apiClient.get('/folkcultures'),
+  getAll: () => apiClient.get('/folk-culture'),
   
   // 根据ID获取民俗文化详情
-  getById: (id) => apiClient.get(`/folkcultures/${id}`),
+  getById: (id) => apiClient.get(`/folk-culture/${id}`),
   
   // 创建新的民俗文化记录
-  create: (data) => apiClient.post('/folkcultures', data),
+  create: (data) => apiClient.post('/folk-culture', data),
   
   // 获取所有地区
   getRegions: () => apiClient.get('/regions'),
