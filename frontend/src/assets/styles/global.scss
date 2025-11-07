@@ -1,6 +1,7 @@
 // 导入变量和混合器
-@use './variables.scss' as *;
-@use './theme.scss' as *;
+// 导入基础样式
+@import './variables.scss';
+@import './theme.scss';
 
 // 英雄区域渐变背景
 @mixin hero-gradient {
