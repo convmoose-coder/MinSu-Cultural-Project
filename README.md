@@ -1,13 +1,13 @@
 # 乘灼展示项目
 
-**最后更新时间：2025年11月07日 10:30:00**
+**最后更新时间：2024年8月15日 10:30:00**
 <!-- 此时间会在下次更新时自动更新为本地时间 -->
 
 ## 项目状态
 
-✅ **项目已完成** - 所有核心功能和安全机制已实现并通过测试验证
+🔄 **项目进行中** - 核心功能开发中，持续优化和更新
 
-本项目已按计划完成所有功能开发，包括前后端分离架构、安全机制、用户端前台等核心模块。项目具备完整的部署文档和测试验证报告，可以投入实际使用。
+本项目正在积极开发中，包含传统架构和新架构两种实现。当前已完成基础的前后端分离架构搭建，正在进行功能完善和性能优化。项目提供了完整的部署文档和测试验证脚本，支持多种部署方式。
 
 ## 项目简介
 
@@ -15,83 +15,71 @@
 
 ## 最新功能更新
 
-### 用户体验优化
-- **首页性能优化**：修复了首页异常抖动问题，提升页面加载速度
-- **图片加载优化**：修复了所有图片404问题，确保所有图片正确加载
-- **错误处理改进**：增强了错误处理机制，提升系统稳定性
+### 架构升级
+- **新架构实现**：增加了 <mcfolder name="new_architecture" path="e:/ChengZhuo/MinSu-Cultural-Project/new_architecture"></mcfolder> 目录，包含现代化的前后端实现
+- **多部署方式支持**：添加Docker、云服务和Nginx三种部署方案
 
-### 技术细节与问题解决
-- **关键技术点**：
-  - Vue 3 Composition API
-  - 响应式数据处理
-  - 组件化开发
-  - Vite资源处理机制
+### UI/UX优化
+- **内容背景设计**：为内容区域添加了中国传统风格的渐变背景和传统纹样
+- **导航栏优化**：调整了导航链接的位置和文本，提升用户体验
+- **响应式设计**：确保在不同设备上都能获得良好的浏览体验
+
+### 技术升级
+- **前后端分离**：完善的Vue.js前端和Python后端架构
+- **TypeScript支持**：增加了TypeScript类型定义，提升代码质量
+- **MCP服务集成**：添加MySQL MCP服务支持，增强数据库交互能力
 
 ## 项目结构
 
 ```
-MinSu/
-├── application/                   # 后端Flask应用程序
-│   ├── __init__.py               # 应用初始化文件
-│   ├── models/                   # 数据模型定义
-│   │   ├── __init__.py
-│   │   └── folk_culture.py       # 民俗文化数据模型
-│   ├── routes/                   # API路由配置
-│   │   ├── __init__.py
-│   │   ├── folk_culture_routes.py# 民俗文化相关API路由
-│   │   └── front_routes.py       # 前台API路由
-│   ├── schemas/                  # 数据验证模式
-│   │   ├── __init__.py
-│   │   └── folk_culture.py       # 民俗文化数据验证模式
-│   ├── services/                 # 业务逻辑层
-│   │   ├── __init__.py
-│   │   └── folk_culture_service.py# 民俗文化业务逻辑实现
-│   └── utils/                    # 后端工具函数
-│       ├── __init__.py
-│       └── db.py                 # 数据库连接工具
-├── frontend/                     # 前端Vue.js应用程序
-│   ├── src/                      # 前端源代码
-│   │   ├── App.vue               # 前台主应用组件
-│   │   ├── main.js               # 前台应用入口文件
-│   │   ├── assets/               # 静态资源文件
-│   │   │   ├── images/           # 图片资源
-│   │   │   ├── styles/           # 样式文件
-│   │   │   └── ...               # 其他静态资源
-│   │   ├── components/           # 可复用UI组件
-│   │   │   ├── FolkCultureCard.vue # 民俗文化卡片组件
-│   │   │   ├── CustomButton.vue    # 自定义按钮组件
-│   │   │   ├── LoadingSpinner.vue  # 加载动画组件
-│   │   ├── views/                # 页面组件
-│   │   │   ├── HomeView.vue      # 首页
-│   │   │   ├── CultureListView.vue# 民俗文化列表页
-│   │   │   ├── CultureDetailView.vue# 民俗文化详情页
-│   │   │   ├── AboutView.vue     # 关于页面
-│   │   ├── router/               # 路由配置
-│   │   │   └── index.js          # 前台路由配置
-│   │   ├── stores/               # 状态管理(Pinia)
-│   │   │   └── folkCultureStore.js # 民俗文化状态管理
-│   │   ├── services/             # API服务封装
-│   │   │   ├── folkCultureService.js # 民俗文化相关服务
-│   │   │   └── api.js            # 通用API封装
-│   │   ├── api/                  # API请求定义
-│   │   │   ├── frontendApi.js    # 前台API实例
-│   │   │   ├── culture.js        # 民俗文化API定义
-│   │   │   └── index.js          # API索引文件
-│   │   ├── composables/          # 组合式函数
-│   │   │   └── useDataFetching.js # 数据获取组合式函数
-│   │   ├── utils/                # 前端工具函数
-│   │   └── types/                # TypeScript类型定义
-│   ├── package.json              # Node.js依赖配置
-│   └── vite.config.js            # 前台构建配置
-├── scripts/                      # 数据库和系统管理脚本
-│   ├── init_database.py          # 数据库初始化脚本
-│   └── ...                       # 其他管理脚本
-├── templates/                    # 传统HTML模板（备用方案）
-│   └── front/                    # 前台传统页面模板
-├── requirements.txt              # Python依赖包列表
-├── app.py                        # Flask应用主文件
-├── init_db.py                   # 数据库初始化脚本
-└── ...                          # 其他配置和文档文件
+MinSu-Cultural-Project/
+├── .env.example                 # 环境变量示例文件
+├── .gitignore                   # Git忽略配置
+├── README.md                    # 项目说明文档
+├── frontend/                    # 前端Vue.js应用程序
+│   ├── index.html               # HTML入口文件
+│   ├── package-lock.json        # npm依赖锁定文件
+│   ├── package.json             # npm依赖配置
+│   ├── src/                     # 前端源代码
+│   │   ├── App.vue              # 主应用组件
+│   │   ├── main.js              # 应用入口文件
+│   │   ├── api/                 # API请求定义
+│   │   ├── assets/              # 静态资源文件
+│   │   ├── components/          # 可复用组件
+│   │   ├── composables/         # 组合式函数
+│   │   ├── router/              # 路由配置
+│   │   ├── stores/              # 状态管理
+│   │   ├── types/               # TypeScript类型定义
+│   │   ├── utils/               # 工具函数
+│   │   └── views/               # 页面组件
+│   ├── tsconfig.json            # TypeScript配置
+│   ├── tsconfig.node.json       # Node环境TypeScript配置
+│   └── vite.config.js           # Vite构建配置
+├── new_architecture/            # 新架构实现
+│   ├── DEPLOYMENT_CLOUD.md      # 云部署文档
+│   ├── DEPLOYMENT_DOCKER.md     # Docker部署文档
+│   ├── DEPLOYMENT_NGINX.md      # Nginx部署文档
+│   ├── README.md                # 新架构说明
+│   ├── backend/                 # 新后端服务
+│   │   ├── app/                 # 后端应用代码
+│   │   └── requirements.txt     # Python依赖
+│   ├── docker/                  # Docker配置
+│   │   ├── backend.Dockerfile   # 后端Dockerfile
+│   │   ├── docker-compose.yml   # Docker Compose配置
+│   │   ├── frontend.Dockerfile  # 前端Dockerfile
+│   │   └── nginx/               # Nginx配置
+│   └── frontend/                # 新前端实现
+│       ├── admin/               # 管理端
+│       └── client/              # 客户端
+├── scripts/                     # 系统管理脚本
+│   ├── direct_start_mcp.bat     # MCP直接启动脚本
+│   ├── start_mysql_mcp_server.py# MySQL MCP服务启动
+│   └── update_database.py       # 数据库更新脚本
+├── tests/                       # 测试文件
+│   ├── test_db_connection.py    # 数据库连接测试
+│   ├── test_mcp_client.py       # MCP客户端测试
+│   └── test_mysql.py            # MySQL测试
+└── test_db_connection.py        # 根目录数据库连接测试
 ```
 
 ## 技术栈
@@ -116,8 +104,9 @@ MinSu/
 
 ### 环境要求
 - Python 3.8+
-- Node.js 16+
+- Node.js 16+ 或 18+
 - MySQL 8.0+
+- Docker (可选，用于容器化部署)
 
 ### 后端设置
 
@@ -149,24 +138,19 @@ python app.py
 
 后端服务将在 http://localhost:5000 上运行。
 
-### 生产环境部署（使用Gunicorn）
+### 生产环境部署
 
-安装Gunicorn：
+项目提供多种部署方式，请参考对应的部署文档：
+
+1. **Docker部署**：查看 <mcfile name="DEPLOYMENT_DOCKER.md" path="e:/ChengZhuo/MinSu-Cultural-Project/new_architecture/DEPLOYMENT_DOCKER.md"></mcfile>
+2. **云服务部署**：查看 <mcfile name="DEPLOYMENT_CLOUD.md" path="e:/ChengZhuo/MinSu-Cultural-Project/new_architecture/DEPLOYMENT_CLOUD.md"></mcfile>
+3. **Nginx部署**：查看 <mcfile name="DEPLOYMENT_NGINX.md" path="e:/ChengZhuo/MinSu-Cultural-Project/new_architecture/DEPLOYMENT_NGINX.md"></mcfile>
+
+对于传统部署，可以使用Gunicorn：
 
 ```bash
 pip install gunicorn
-```
-
-使用Gunicorn启动应用：
-
-```bash
 gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
-
-或者使用应用工厂模式：
-
-```bash
-gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
 ```
 
 #### 前端设置
@@ -186,33 +170,44 @@ npm run dev
 
 用户端前台服务将在 http://localhost:5173 上运行。
 
+#### 新架构前端设置
+
+1. 客户端设置：
+
+```bash
+cd new_architecture/frontend/client
+npm install
+npm run dev
+```
+
+2. 管理端设置：
+
+```bash
+cd new_architecture/frontend/admin
+npm install
+npm run dev
+```
+
 ### 常见问题解决
 
-如果遇到图片无法加载或页面异常抖动的问题，请检查以下几点：
-
-1. 确保`src/assets/images/defaultImages.js`文件中的图片路径格式正确，应该使用相对路径而非别名：
-   ```javascript
-   // 正确的写法
-   region: '/src/assets/images/placeholder-region.jpg'
-   
-   // 错误的写法
-   region: '@/assets/images/placeholder-region.jpg'
-   ```
-
-2. 如果修改了图片路径后仍未解决问题，请重启开发服务器：
-   ```bash
-   # 在frontend目录下
-   npm run dev
-   ```
-
-3. 数据库连接问题：
+1. **数据库连接问题**：
    - 使用专门的数据库连接测试工具诊断问题：
      ```bash
      python test_db_connection.py
      ```
-   - 检查环境变量配置是否正确
+   - 检查环境变量配置是否正确（参考 `.env.example`）
    - 确认MySQL用户权限设置
-   - 查看DEPLOYMENT_LINUX.md文件中的详细解决方案
+   - 运行测试脚本验证连接：`python tests/test_db_connection.py`
+
+2. **图片加载问题**：
+   - 确保图片路径使用正确的格式
+   - 检查文件权限设置
+   - 清除浏览器缓存后重试
+
+3. **启动错误**：
+   - 确认依赖安装完整：`npm install` 和 `pip install -r requirements.txt`
+   - 检查端口是否被占用
+   - 查看详细错误日志进行排查
 
 ## API接口
 
@@ -236,21 +231,17 @@ npm run dev
 
 ## 核心功能模块
 
-### 文化列表页面
-- 支持按名称搜索
-- 支持按地区和分类筛选
-- 响应式网格布局
-- 中国传统卷轴风格设计
+### 传统架构功能
+- **民俗文化展示与浏览**：包含列表页和详情页
+- **搜索与筛选**：支持按名称搜索、按地区和分类筛选
+- **传统风格UI**：中国传统元素融合现代设计
+- **响应式布局**：适配不同设备屏幕
 
-### 文化详情页面
-- 展示完整的文化信息
-- 相关文化推荐
-- 图片展示
-
-### 导航系统
-- 中国传统红色主题
-- 响应式设计，移动端友好
-- 平滑过渡动画
+### 新架构功能
+- **前后端完全分离**：现代化的API设计和前端实现
+- **管理端功能**：提供内容管理和系统配置能力
+- **Docker支持**：简化部署和环境配置
+- **多环境适配**：开发、测试、生产环境配置
 
 ## 注意事项
 
@@ -267,18 +258,32 @@ npm run dev
 
 ### 后端开发
 
-1. 添加新的数据模型：在`application/models/`目录下创建新的模型文件
-2. 添加新的API路由：在`application/routes/`目录下定义新的路由函数
-3. 实现业务逻辑：在`application/services/`目录下创建对应的服务
-4. 数据验证：在`application/schemas/`目录下定义请求和响应模式
+1. **传统后端开发**：
+   - 添加新的数据模型：在相关目录下创建模型文件
+   - 添加新的API路由：定义路由函数
+   - 实现业务逻辑：创建对应的服务
+   - 数据验证：定义请求和响应模式
+
+2. **新架构后端开发**：
+   - 参考 `new_architecture/backend/app/` 目录结构
+   - 遵循Flask应用工厂模式
+   - 使用蓝图组织路由
+   - 实现RESTful API设计
 
 ### 前端开发
 
-1. 添加新的页面：在`src/views/`目录下创建新的Vue组件
-2. 注册路由：在`src/router/index.js`中添加新的路由配置
-3. 创建可复用组件：在`src/components/`目录下开发组件
-4. 添加状态管理：在`src/stores/`目录下定义Pinia store
-5. 添加业务逻辑：在`src/composables/`目录下创建组合式函数
+1. **传统前端开发**：
+   - 添加新的页面：在`src/views/`目录下创建Vue组件
+   - 注册路由：在`src/router/index.js`中添加路由配置
+   - 创建可复用组件：在`src/components/`目录下开发组件
+   - 添加状态管理：在`src/stores/`目录下定义Pinia store
+   - 添加业务逻辑：在`src/composables/`目录下创建组合式函数
+
+2. **新架构前端开发**：
+   - 客户端开发：`new_architecture/frontend/client/`
+   - 管理端开发：`new_architecture/frontend/admin/`
+   - 遵循组件化开发规范
+   - 使用TypeScript确保类型安全
 
 ## 部署
 
@@ -323,15 +328,27 @@ npm run dev
    ```bash
    python app.py
    ```
-### Linux服务器部署
+### 部署选项
 
-详细部署指南请参考 [DEPLOYMENT_LINUX.md](DEPLOYMENT_LINUX.md) 文件，其中包含了完整的Linux服务器部署步骤，包括：
-- 环境准备和依赖安装
-- 数据库配置和初始化
-- 前后端服务部署
-- Nginx反向代理配置
-- SSL证书配置
-- 服务管理和监控
+项目提供三种主要部署方式：
+
+1. **Docker容器化部署**
+   - 最推荐的部署方式
+   - 包含完整的Docker配置
+   - 一键部署整个应用栈
+   - 适合开发、测试和生产环境
+
+2. **云服务部署**
+   - 支持主流云服务提供商
+   - 包含云服务特定的配置指南
+   - 适合生产环境
+
+3. **Nginx反向代理部署**
+   - 传统部署方式
+   - 提供完整的Nginx配置示例
+   - 适合需要自定义服务器配置的场景
+
+详细部署指南请参考 <mcfolder name="new_architecture" path="e:/ChengZhuo/MinSu-Cultural-Project/new_architecture"></mcfolder> 目录下的对应文档。
 
 ## 性能优化
 
