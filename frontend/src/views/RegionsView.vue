@@ -114,175 +114,350 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="regions-view">
-    <h2>地区分类</h2>
-    
-    <LoadingSpinner v-if="loading" :full-screen="false" message="正在加载地区数据..." />
-    
-    <div v-else-if="error" class="error-message">
-      <p>{{ error }}</p>
-      <button class="retry-btn" @click="handleRetry">重试</button>
+  <section class="regions-view">
+    <!-- 页面标题 -->
+    <div class="page-header">
+      <h1 class="page-title">地区文化</h1>
+      <p class="page-subtitle">探索不同地区的独特民俗文化特色</p>
     </div>
     
+    <!-- 加载状态 -->
+    <LoadingSpinner v-if="loading" :full-screen="false" message="正在加载地区数据..." />
+    
+    <!-- 错误状态 -->
+    <div v-else-if="error" class="error-message">
+      <div class="error-icon">⚠️</div>
+      <p class="error-text">{{ error }}</p>
+      <button class="btn-primary" @click="handleRetry">
+        重试加载
+      </button>
+    </div>
+    
+    <!-- 主要内容 -->
     <div v-else class="regions-container">
-      <div class="region-list">
-        <h3>选择地区</h3>
-        <ul>
-          <li 
-            v-for="region in regions" 
-            :key="region"
-            :class="{ active: selectedRegion === region }"
-            @click="handleRegionChange(region)"
-          >
-            {{ region }}
-          </li>
-        </ul>
-      </div>
-      
-      <div class="region-content">
-        <h3>{{ selectedRegion }} 的民俗文化</h3>
-        
-        <div v-if="cultures.length === 0" class="no-cultures">
-          该地区暂无民俗文化记录
+      <!-- 地区选择侧边栏 -->
+      <aside class="region-sidebar">
+        <div class="region-sidebar-header">
+          <h3 class="region-sidebar-title">选择地区</h3>
+          <div class="region-count">{{ regions.length }}个地区</div>
         </div>
         
+        <nav class="region-nav">
+          <ul class="region-list">
+            <li 
+              v-for="region in regions" 
+              :key="region"
+              class="region-item"
+              :class="{ active: selectedRegion === region }"
+              @click="handleRegionChange(region)"
+            >
+              <span class="region-name">{{ region }}</span>
+              <span class="region-badge">{{ cultures.length }}</span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      
+      <!-- 文化内容区域 -->
+      <main class="region-content">
+        <div class="region-content-header">
+          <h2 class="region-content-title">{{ selectedRegion }} 的民俗文化</h2>
+          <div class="content-info">
+            共 {{ cultures.length }} 项文化记录
+          </div>
+        </div>
+        
+        <!-- 无数据状态 -->
+        <div v-if="cultures.length === 0" class="no-cultures">
+          <div class="no-data-icon">📚</div>
+          <h3>暂无文化记录</h3>
+          <p>该地区目前还没有相关的民俗文化记录</p>
+        </div>
+        
+        <!-- 文化卡片网格 -->
         <div v-else class="culture-grid">
           <FolkCultureCard 
             v-for="culture in cultures" 
             :key="culture.id"
             :culture="culture"
+            class="culture-card"
           />
         </div>
-      </div>
+      </main>
     </div>
-  </div>
+  </section>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .regions-view {
-  max-width: 1200px;
+  max-width: var(--container-width);
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: var(--spacing-section) var(--spacing-padding);
 }
 
-.regions-view h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #333;
+// 页面头部
+.page-header {
   text-align: center;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+  animation-delay: 0.1s;
 }
 
+.page-title {
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary-dark);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 700;
+}
+
+.page-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+// 错误信息
 .error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 2rem;
-  border-radius: 8px;
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--spacing-md);
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--color-error-border);
+  box-shadow: var(--shadow-sm);
 }
 
-.retry-btn {
-  background-color: #8B4513;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
 }
 
-.retry-btn:hover {
-  background-color: #6d3510;
+.error-text {
+  font-size: var(--font-size-base);
+  font-weight: 500;
 }
 
+// 容器布局
 .regions-container {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  gap: 2rem;
-  background-color: white;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  grid-template-columns: 280px 1fr;
+  gap: var(--spacing-xl);
+  animation: fadeIn 0.8s ease-out;
+}
+
+// 侧边栏样式
+.region-sidebar {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+  height: fit-content;
+  position: sticky;
+  top: var(--spacing-lg);
+}
+
+.region-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.region-sidebar-title {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.region-count {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-full);
+  font-weight: 600;
 }
 
 .region-list {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.region-list h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #333;
-  font-size: 1.2rem;
-}
-
-.region-list ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.region-list li {
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.25rem;
-  border-radius: 4px;
+.region-item {
+  padding: var(--spacing-md) var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  transition: all 0.3s;
-  color: #555;
+  transition: all 0.3s ease;
+  color: var(--color-text-secondary);
   border: 1px solid transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
-.region-list li:hover {
-  background-color: #f0f0f0;
-  color: #8B4513;
-  border-color: #8B4513;
+.region-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
 }
 
-.region-list li.active {
-  background-color: #8B4513;
+.region-item:hover {
+  background-color: var(--color-hover);
+  color: var(--color-primary);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-xs);
+}
+
+.region-item:hover::before {
+  background-color: var(--color-primary);
+}
+
+.region-item.active {
+  background-color: var(--color-primary);
   color: white;
+  box-shadow: var(--shadow-md);
 }
 
+.region-item.active::before {
+  background-color: var(--color-primary-dark);
+}
+
+.region-badge {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: inherit;
+  font-size: var(--font-size-xs);
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--border-radius-full);
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+// 内容区域样式
 .region-content {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
 }
 
-.region-content h3 {
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  color: #333;
-  font-size: 1.4rem;
+.region-content-header {
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--color-border);
 }
 
+.region-content-title {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-dark);
+  margin: 0 0 var(--spacing-xs) 0;
+  font-weight: 700;
+}
+
+.content-info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+// 无数据状态
 .no-cultures {
   text-align: center;
-  padding: 3rem;
-  color: #666;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  background-color: var(--color-background);
+  border-radius: var(--border-radius-lg);
+  border: 2px dashed var(--color-border);
 }
 
+.no-data-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.6;
+}
+
+.no-cultures h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+.no-cultures p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+// 文化卡片网格
 .culture-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: var(--spacing-lg);
 }
 
-/* 响应式调整 */
-@media (max-width: 992px) {
+.culture-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.culture-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+// 动画效果
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 响应式设计
+@media (max-width: 1024px) {
   .regions-container {
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 250px 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .culture-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }
 
@@ -291,8 +466,62 @@ onMounted(() => {
     grid-template-columns: 1fr;
   }
   
+  .region-sidebar {
+    position: static;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .region-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+  
+  .region-item {
+    flex: 1;
+    min-width: calc(50% - 8px);
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-sm);
+    margin-bottom: 0;
+  }
+  
+  .region-item::before {
+    width: 100%;
+    height: 4px;
+    top: 0;
+    left: 0;
+  }
+  
+  .region-item:hover {
+    transform: translateY(-2px);
+  }
+  
   .culture-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .page-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .region-content-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .region-item {
+    min-width: 100%;
+  }
+  
+  .regions-view {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+  
+  .region-sidebar,
+  .region-content {
+    padding: var(--spacing-md);
   }
 }
 </style>

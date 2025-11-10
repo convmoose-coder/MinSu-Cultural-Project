@@ -1,12 +1,14 @@
-// 导入SCSS变量和混合器
+// 导入SCSS变量、CSS变量映射和动画（variables.scss已包含theme.scss）
 @import './variables.scss';
-@import './theme.scss';
+@import './css-variables.scss';
+@import './animations.scss';
 
-/* 全局样式重置 */
+/* 全局样式重置 - 与global.scss保持一致 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* 基础样式 - 中国传统主题 */
@@ -27,20 +29,23 @@ html, body {
   padding: 0 1rem;
 }
 
-/* 卡片样式 - 中国传统卷轴设计 */
+/* 卡片样式 - 中国传统卷轴设计优化 */
 .card {
   background-color: #fcf7e8;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-md;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  transition: all $transition-base;
   border: 1px solid #e8d4b4;
   position: relative;
   overflow: hidden;
+  
+  // 结合现代动画效果
+  @extend .card-animation;
 }
 
-/* 卡片装饰性元素 */
+/* 卡片装饰性元素 - 优化为传统风格 */
 .card::before {
   content: '';
   position: absolute;
@@ -48,7 +53,7 @@ html, body {
   left: 0;
   width: 4px;
   height: 100%;
-  background-color: $primary-color;
+  background: linear-gradient(to bottom, $traditional-red, $traditional-gold, $traditional-red);
 }
 
 /* 卡片悬停效果 */
@@ -58,22 +63,26 @@ html, body {
   border-color: #d3b888;
 }
 
-/* 按钮样式 - 中国传统红色主题 */
+/* 按钮样式 - 中国传统红色主题优化 */
 .btn {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: $spacing-sm $spacing-lg;
   background-color: $primary-color;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all $transition-base;
   font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: $shadow-sm;
   position: relative;
   overflow: hidden;
+  
+  // 应用现代与传统结合的动画效果
+  @extend .btn-animation;
+  @extend .traditional-ripple;
 }
 
 /* 按钮悬停效果 */
@@ -89,35 +98,78 @@ html, body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* 表单样式 */
+/* 表单样式 - 优化间距 */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: $spacing-md;
+  
+  // 确保表单元素结构紧凑
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-weight: 500;
+  }
+  
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid #ddd;
+    border-radius: $border-radius-md;
+    font-size: $font-size-base;
+    @extend .form-input-animation;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-/* 响应式样式 */
-@media (max-width: 768px) {
+/* 响应式样式 - 优化移动端体验 */
+@media (max-width: $breakpoint-md) {
   .card {
-    padding: 1rem;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .btn {
+    padding: $spacing-sm $spacing-md;
+    width: 100%;
+    text-align: center;
+  }
+  
+  // 确保移动端内容结构紧凑
+  .container {
+    padding: 0 $spacing-sm;
+  }
+  
+  // 优化移动端表单
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: $spacing-sm;
+  }
+}
+
+/* 传统风格的分割线 */
+.traditional-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, $traditional-red 25%, $traditional-gold 50%, $traditional-red 75%, transparent 100%);
+  margin: $spacing-lg 0;
+}
+
+/* 优化的内容区块 */
+.optimized-section {
+  padding: $spacing-lg 0;
+  position: relative;
+  
+  // 防止内容过于松散
+  > * {
+    margin-bottom: $spacing-md;
+  }
+  
+  > *:last-child {
+    margin-bottom: 0;
   }
 }

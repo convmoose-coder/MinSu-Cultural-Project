@@ -30,3 +30,13 @@ export function getRegionById(id) {
 export function getRegionCultures(regionId, params = {}) {
   return apiClient.get(`/region/${regionId}`, { params })
 }
+
+// 导出API对象
+export const folkCultureApi = {
+  getFolkCultures,
+  getFolkCultureById,
+  searchFolkCultures,
+  getRegions,
+  getRegionById,
+  getRegionCultures
+}

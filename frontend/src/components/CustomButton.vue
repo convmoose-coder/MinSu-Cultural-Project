@@ -13,7 +13,9 @@
         'custom-button--loading': loading,
         'custom-button--disabled': disabled,
         'custom-button--icon-only': iconOnly,
-        'custom-button--circle': circle
+        'custom-button--circle': circle,
+        'btn-animation': !disabled && !loading,
+        'traditional-ripple': !disabled && !loading && variant === 'primary'
       }
     ]"
     :disabled="disabled || loading"
@@ -378,10 +380,41 @@ const handleClick = (event) => {
     }
   }
   
-  // 活跃状态
+  // 活跃状态 - 增强点击反馈
   &:active:not(.custom-button--disabled):not(.custom-button--loading) {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.98);
     box-shadow: $shadow-sm;
+    transition: all $transition-fast;
+  }
+  
+  // 焦点状态增强
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+  
+  // 传统风格按钮变体
+  &--primary {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.3) 48%, rgba(255,255,255,0.3) 52%, transparent 52%);
+      background-size: 10px 10px;
+      opacity: 0;
+      transition: opacity $transition-base;
+    }
+    
+    &:hover::after {
+      opacity: 0.6;
+    }
   }
   
   // 焦点状态

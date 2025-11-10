@@ -1,0 +1,114 @@
+// CSS变量映射文件
+// 将Sass变量映射到CSS变量，确保全局一致性
+
+// 使用@import导入主题文件，让变量进入全局作用域
+@import './theme.scss';
+
+// CSS变量映射
+:root {
+  // 颜色变量 - 使用现代主题配色
+  --color-primary: #{$primary-color};
+  --color-primary-light: #{$primary-light};
+  --color-primary-dark: #{$primary-dark};
+  --color-secondary: #{$secondary-color};
+  --color-secondary-light: #{$gray-100};
+  --color-secondary-dark: #{$gray-800};
+  --color-accent: #{$accent-color};
+  --color-accent-light: #{$accent-light};
+  --color-accent-dark: #{$accent-dark};
+  
+  // 背景色
+  --color-background: #{$bg-primary};
+  --color-surface: #{$bg-secondary};
+  --color-overlay: #{$bg-overlay};
+  
+  // 文本颜色
+  --color-text-primary: #{$text-primary};
+  --color-text-secondary: #{$text-secondary};
+  --color-text-tertiary: #{$text-tertiary};
+  --color-text-disabled: #{$text-disabled};
+  --color-text-inverse: #{$text-inverse};
+  
+  // 边框颜色
+  --color-border: #{$border-light};
+  --color-border-medium: #{$border-medium};
+  --color-border-dark: #{$border-dark};
+  
+  // 状态颜色
+  --color-success: #{$success};
+  --color-warning: #{$warning};
+  --color-danger: #{$danger};
+  --color-info: #{$info};
+  --color-error: #{$danger};
+  --color-error-bg: #{$danger}10; // 10% opacity
+  --color-error-border: #{$danger}40; // 40% opacity
+  
+  // 传统装饰色
+  --color-traditional-red: #{$traditional-red};
+  --color-traditional-gold: #{$traditional-gold};
+  --color-traditional-blue: #{$traditional-blue};
+  
+  // 尺寸变量
+  --container-width: 1200px;
+  --spacing-xs: #{$spacing-xs};
+  --spacing-sm: #{$spacing-sm};
+  --spacing-md: #{$spacing-md};
+  --spacing-lg: #{$spacing-lg};
+  --spacing-xl: #{$spacing-xl};
+  --spacing-2xl: #{$spacing-2xl};
+  --spacing-3xl: #{$spacing-3xl};
+  --spacing-section: #{$spacing-2xl};
+  --spacing-padding: #{$spacing-lg};
+  
+  // 圆角
+  --border-radius-sm: #{$border-radius-sm};
+  --border-radius-md: #{$border-radius-md};
+  --border-radius-lg: #{$border-radius-lg};
+  --border-radius-xl: #{$border-radius-xl};
+  --border-radius-full: #{$border-radius-full};
+  
+  // 阴影
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  --shadow-focus: #{$shadow-focus};
+  
+  // 字体
+  --font-family-base: #{$font-family-base};
+  --font-family-chinese: #{$font-family-chinese};
+  --font-family-mono: #{$font-family-mono};
+  
+  // 字体大小
+  --font-size-xs: #{$font-size-xs}px;
+  --font-size-sm: #{$font-size-sm}px;
+  --font-size-base: #{$font-size-base}px;
+  --font-size-lg: #{$font-size-lg}px;
+  --font-size-xl: #{$font-size-xl}px;
+  --font-size-2xl: #{$font-size-2xl}px;
+  --font-size-3xl: #{$font-size-3xl}px;
+  --font-size-4xl: #{$font-size-4xl}px;
+  --font-size-5xl: #{$font-size-5xl}px;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  
+  // 行高
+  --line-height-tight: #{$line-height-tight};
+  --line-height-normal: #{$line-height-normal};
+  --line-height-relaxed: #{$line-height-relaxed};
+  
+  // 过渡时间
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: #{$transition-base};
+  --transition-slow: 350ms ease-in-out;
+}
+
+// 暗色主题变量 (预留)
+@media (prefers-color-scheme: dark) {
+  :root {
+    // 暗色主题可以在这里定义
+    // --color-primary: #{$primary-color-dark};
+    // --color-background: #{$gray-900};
+    // ...
+  }
+}

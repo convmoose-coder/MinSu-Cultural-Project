@@ -50,7 +50,7 @@ export const frontendRoutes = [
   {
     path: '/:pathMatch(.*)*',
     name: 'notFound',
-    component: HomeView,
+    component: () => import('../views/NotFoundView.vue'),
     meta: {
       title: '页面未找到 - 民俗文化展示系统',
       requiresAuth: false

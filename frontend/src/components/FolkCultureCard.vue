@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="folk-culture-card" 
+    class="folk-culture-card scroll-card card-animation"
     v-motion-slide-visible-once-bottom
     :class="{ 'is-favorited': isFavorite, 'is-loading': isLoading }"
   >
@@ -34,18 +34,20 @@
       <div class="card-actions">
         <div class="action-buttons">
           <CustomButton 
-            :variant="isFavorite ? 'danger' : 'ghost'" 
-            size="small"
-            icon="StarFilled"
-            circle
-            @click="toggleFavorite"
-          />
+          :variant="isFavorite ? 'danger' : 'ghost'" 
+          size="small"
+          icon="StarFilled"
+          circle
+          @click="toggleFavorite"
+          class="click-effect"
+        />
         </div>
         <CustomButton 
           variant="primary" 
           size="small"
           icon="ArrowRight"
           @click="navigateToDetail"
+          class="traditional-ripple"
         >
           查看详情
         </CustomButton>
@@ -114,7 +116,7 @@ const handleImageError = (event) => {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/global.scss' as *;
+@use '@/assets/styles/variables.scss' as *;
 
 // 直接定义变量以确保可用
 $transition-base: 0.3s ease;
@@ -147,7 +149,6 @@ $warning-color: #ed8936;
 
 .culture-card {
   @include card;
-  @include card-hover;
   height: 100%;
   display: flex;
   flex-direction: column;

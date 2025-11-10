@@ -5,6 +5,30 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>乘灼</title>
+    <!-- 直接在HTML中添加最高优先级样式，确保导航栏背景色正确 -->
+    <style>
+      #custom-navbar,
+      #custom-navbar.navbar,
+      #custom-navbar.navbar-scrolled,
+      nav#custom-navbar,
+      nav#custom-navbar.navbar,
+      nav#custom-navbar.navbar-scrolled,
+      body #custom-navbar,
+      html body #custom-navbar {
+        background-color: #87CEEB !important;
+        background-image: none !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+      }
+      #custom-navbar .container,
+      #custom-navbar .navbar-inner {
+        background-color: transparent !important;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

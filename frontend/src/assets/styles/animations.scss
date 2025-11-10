@@ -1,0 +1,463 @@
+// 动画样式定义 - 现代风格与传统文化风格相结合
+
+// 注意：此文件由global.scss和main.scss导入，不需要重复导入变量和主题
+
+// 传统波纹点击动画
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+// 传统卷轴展开动画
+@keyframes scrollExpand {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// 传统装饰旋转动画
+@keyframes decorationRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// 现代淡入动画
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 现代缩放动画
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// 现代脉冲动画
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// 传统波浪动画
+@keyframes wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// 动画类 - 点击效果
+.click-effect {
+  position: relative;
+  overflow: hidden;
+  transition: transform $transition-base;
+}
+
+.click-effect:active {
+  transform: scale(0.98);
+}
+
+.click-effect::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba($primary-color, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width $transition-base, height $transition-base;
+}
+
+.click-effect:active::after {
+  width: 150px;
+  height: 150px;
+}
+
+// 动画类 - 传统波纹点击效果
+.traditional-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.traditional-ripple:active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, $traditional-gold 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: ripple 0.6s ease-out;
+}
+
+// 动画类 - 选择效果
+.selection-effect {
+  transition: all $transition-base;
+  position: relative;
+}
+
+.selection-effect::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  transition: all $transition-base;
+}
+
+.selection-effect.selected::before {
+  border-color: $primary-color;
+  box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+}
+
+.selection-effect:hover::before {
+  border-color: rgba($primary-color, 0.5);
+}
+
+// 动画类 - 传统选择效果
+.traditional-selection {
+  transition: all $transition-base;
+  position: relative;
+}
+
+.traditional-selection::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 2px solid transparent;
+  border-radius: $border-radius-md;
+  background: linear-gradient(45deg, transparent 48%, $traditional-red 48%, $traditional-red 52%, transparent 52%) 0 0/15px 15px;
+  transition: all $transition-base;
+  opacity: 0;
+}
+
+.traditional-selection.selected::before {
+  opacity: 1;
+  animation: decorationRotate 20s linear infinite;
+}
+
+.traditional-selection:hover::before {
+  opacity: 0.6;
+}
+
+// 卡片动画效果
+.card-animation {
+  transition: all $transition-base;
+}
+
+.card-animation:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: $shadow-lg;
+}
+
+.card-animation:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+// 传统卷轴卡片动画
+.scroll-card {
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: linear-gradient(to right, $traditional-red 0%, $traditional-gold 50%, $traditional-red 100%);
+}
+
+.scroll-card:hover {
+  animation: scrollExpand 0.3s ease-out forwards;
+}
+
+// 按钮动画效果
+.btn-animation {
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-animation::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-animation:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-animation:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+// 传统风格按钮动画
+.traditional-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all $transition-base;
+  background: linear-gradient(45deg, $traditional-red 0%, $primary-color 50%, $traditional-red 100%);
+  background-size: 200% auto;
+  animation: wave 3s ease-in-out infinite;
+}
+
+.traditional-btn:hover {
+  animation: wave 1.5s ease-in-out infinite;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+// 表单元素动画效果
+.form-input-animation {
+  transition: all $transition-base;
+  position: relative;
+  z-index: 1;
+}
+
+.form-input-animation:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+}
+
+// 传统风格表单元素
+.traditional-input {
+  transition: all $transition-base;
+  position: relative;
+  border: 2px solid $border-light;
+  background-color: $bg-primary;
+}
+
+.traditional-input:focus {
+  border-color: $traditional-red;
+  box-shadow: 0 0 0 3px rgba($traditional-red, 0.1);
+  background-color: $bg-primary;
+}
+
+// 导航项动画
+.nav-item-animation {
+  position: relative;
+  transition: all $transition-base;
+}
+
+.nav-item-animation::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: $primary-color;
+  transition: width $transition-base;
+}
+
+.nav-item-animation:hover::after {
+  width: 100%;
+}
+
+.nav-item-animation.active::after {
+  width: 100%;
+}
+
+// 传统导航项动画
+.traditional-nav-item {
+  position: relative;
+  transition: all $transition-base;
+  padding: $spacing-xs $spacing-sm;
+}
+
+.traditional-nav-item::before {
+  content: '❯';
+  position: absolute;
+  left: -12px;
+  opacity: 0;
+  transition: all $transition-base;
+  color: $traditional-red;
+}
+
+.traditional-nav-item:hover::before {
+  opacity: 1;
+  left: -8px;
+}
+
+.traditional-nav-item.active {
+  color: $traditional-red;
+  font-weight: 600;
+}
+
+.traditional-nav-item.active::before {
+  opacity: 1;
+  left: -8px;
+}
+
+// 淡入动画
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// 缩放动画
+.scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+// 脉冲动画
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+// 应用于整个页面的入场动画
+.page-enter {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+// 应用于内容区块的入场动画
+.section-enter {
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.section-enter:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.section-enter:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.section-enter:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+// 现代风格的加载动画
+.modern-loading {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.modern-loading::before,
+.modern-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-radius: 50%;
+}
+
+.modern-loading::before {
+  border-top-color: $primary-color;
+  animation: decorationRotate 1s linear infinite;
+}
+
+.modern-loading::after {
+  border-bottom-color: $accent-color;
+  animation: decorationRotate 1s linear infinite reverse;
+}
+
+// 传统风格的加载动画
+.traditional-loading {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  background: linear-gradient(45deg, $traditional-red 25%, $traditional-gold 25%, $traditional-gold 50%, $traditional-red 50%, $traditional-red 75%, $traditional-gold 75%);
+  background-size: 8px 8px;
+  animation: decorationRotate 1s linear infinite;
+}
+
+// 骨架屏动画
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: wave 1.5s ease-in-out infinite;
+}
+
+// 响应式动画调整
+@media (max-width: $breakpoint-md) {
+  .card-animation:hover {
+    transform: translateY(-3px) scale(1.005);
+  }
+  
+  .btn-animation:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// 动画速度控制类
+.animation-fast {
+  transition-duration: 0.15s !important;
+}
+
+.animation-slow {
+  transition-duration: 0.5s !important;
+}
+
+// 减少动画效果（适合性能优化）
+.reduce-motion {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
