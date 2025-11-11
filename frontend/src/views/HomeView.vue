@@ -54,14 +54,6 @@
             <span class="stat-number">{{ statistics.cultures || 0 }}</span>
             <span class="stat-label">民族</span>
           </div>
-          <div class="stat-item">
-            <span class="stat-number">{{ statistics.artworks || 0 }}</span>
-            <span class="stat-label">艺术品</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">{{ statistics.stories || 0 }}</span>
-            <span class="stat-label">故事</span>
-          </div>
         </div>
       </div>
     </section>
@@ -109,7 +101,7 @@
             @click="loadMoreCultures"
             :loading="loadingCultures"
           >
-            查看更多民族文化
+            查看更多民族
           </modern-button>
         </div>
       </div>
@@ -148,6 +140,17 @@
             @action-click="handleRegionAction(region)"
           />
         </div>
+                <!-- 探索更多按钮 -->
+          <div class="view-more-container">
+            <modern-button 
+              size="medium" 
+              variant="secondary"
+              @click="exploreMoreRegions"
+              :loading="loadingRegions"
+            >
+              探索更多地区
+            </modern-button>
+          </div>
         
 
       </div>
@@ -210,9 +213,7 @@ export default {
       // 统计数据
       statistics: {
         regions: 34,
-        cultures: 56,
-        artworks: 1200,
-        stories: 5000
+        cultures: 56
       },
       
       // 民族文化数据
