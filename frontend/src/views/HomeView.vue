@@ -149,17 +149,7 @@
           />
         </div>
         
-        <!-- 探索更多按钮 -->
-        <div class="view-more-container">
-          <modern-button 
-            size="medium" 
-            variant="secondary"
-            @click="exploreMoreRegions"
-            :loading="loadingRegions"
-          >
-            探索更多地区文化
-          </modern-button>
-        </div>
+
       </div>
     </section>
 

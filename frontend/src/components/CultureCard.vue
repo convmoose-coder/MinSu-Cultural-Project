@@ -26,19 +26,7 @@
       <p class="culture-card__description" :class="{ 'culture-card__description--truncated': !expanded }">
         {{ description }}
       </p>
-      <div class="culture-card__footer">
-        <ModernButton
-          variant="primary"
-          size="small"
-          @click.stop="handleExplore"
-          icon-right
-        >
-          探索
-          <svg slot="icon-right" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </ModernButton>
-      </div>
+
     </div>
   </div>
 </template>

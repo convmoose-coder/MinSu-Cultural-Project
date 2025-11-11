@@ -16,12 +16,7 @@
           {{ cultureCount }} 项文化
         </span>
       </div>
-      <div class="region-card__action">
-        <span>探索地区文化</span>
-        <svg class="region-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </div>
+
     </div>
   </div>
 </template>
