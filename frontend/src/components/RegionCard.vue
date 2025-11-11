@@ -1,29 +1,39 @@
 <template>
-  <div class="region-card">
-    <div class="region-image">
-      <img :src="image" :alt="name" @error="handleImageError" />
-    </div>
-    <div class="region-content">
-      <h3 class="region-name">{{ name }}</h3>
-      <p class="region-description">{{ description }}</p>
-      <div class="region-stats">
-        <span class="stat-item">
-          <el-icon><Document /></el-icon>
+  <div class="region-card" :style="cardStyle" @click="handleClick">
+    <ModernImage
+      :src="image"
+      :alt="name"
+      fit="cover"
+      :default-src="'traditional.jpg'"
+    />
+    <div class="region-card__gradient-overlay"></div>
+    <div class="region-card__content">
+      <span class="region-card__tag">{{ tag || '地区文化' }}</span>
+      <h3 class="region-card__title">{{ name }}</h3>
+      <p class="region-card__subtitle">{{ description }}</p>
+      <div class="region-card__stats">
+        <span class="region-card__stat-item">
           {{ cultureCount }} 项文化
         </span>
+      </div>
+      <div class="region-card__action">
+        <span>探索地区文化</span>
+        <svg class="region-card__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Document } from '@element-plus/icons-vue'
-import defaultImages from '@/assets/images/defaultImages.js'
+import { computed } from 'vue'
+import ModernImage from './ModernImage.vue'
 
 export default {
   name: 'RegionCard',
   components: {
-    Document
+    ModernImage
   },
   props: {
     id: {
@@ -45,11 +55,38 @@ export default {
     image: {
       type: String,
       default: ''
+    },
+    tag: {
+      type: String,
+      default: ''
+    },
+    gradientFrom: {
+      type: String,
+      default: 'from-black/70'
+    },
+    gradientTo: {
+      type: String,
+      default: 'to-transparent'
+    },
+    defaultImage: {
+      type: String,
+      default: 'traditional.jpg'
     }
   },
-  methods: {
-    handleImageError(event) {
-      event.target.src = defaultImages.region
+  emits: ['click'],
+  setup(props, { emit }) {
+    const cardStyle = computed(() => ({
+      '--gradient-from': props.gradientFrom,
+      '--gradient-to': props.gradientTo
+    }))
+
+    const handleClick = () => {
+      emit('click', props.id)
+    }
+
+    return {
+      cardStyle,
+      handleClick
     }
   }
 }
@@ -57,62 +94,150 @@ export default {
 
 <style lang="scss" scoped>
 .region-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+  border-radius: 1rem;
   overflow: hidden;
-  transition: all 0.3s ease;
+  height: 360px;
   cursor: pointer;
-  
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
-  
-  .region-image {
-    height: 200px;
-    overflow: hidden;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
+
+  &__gradient-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--gradient-from, from-black/70), var(--gradient-to, to-transparent));
+    z-index: 1;
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 2;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .region-card:hover & {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
-  
-  &:hover .region-image img {
-    transform: scale(1.05);
+
+  &__tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    color: #374151;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(4px);
   }
-  
-  .region-content {
-    padding: 16px;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 1rem 0;
+    max-width: 80%;
+    line-height: 1.5;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  &__stats {
+    margin-bottom: 1.5rem;
     
-    .region-name {
-      font-size: 20px;
-      font-weight: 600;
-      color: #2d3748;
-      margin-bottom: 8px;
-    }
-    
-    .region-description {
-      color: #718096;
-      margin-bottom: 16px;
-      line-height: 1.75;
-    }
-    
-    .region-stats {
-      display: flex;
+    &-item {
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      
-      .stat-item {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 14px;
-        color: #4a5568;
-      }
+      gap: 4px;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+    }
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    background: rgba(59, 130, 246, 0.9);
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+
+    .region-card:hover & {
+      background: rgba(59, 130, 246, 1);
+      transform: translateX(4px);
+    }
+  }
+
+  &__arrow {
+    transition: transform 0.3s ease;
+
+    .region-card:hover & {
+      transform: translateX(2px);
+    }
+  }
+}
+
+// 响应式调整
+@media (max-width: 768px) {
+  .region-card {
+    height: 300px;
+
+    &__content {
+      padding: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__subtitle {
+      font-size: 0.875rem;
+      max-width: 90%;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .region-card {
+    height: 250px;
+
+    &__content {
+      padding: 1.25rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__subtitle {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 }

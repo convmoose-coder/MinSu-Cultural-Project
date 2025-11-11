@@ -5,7 +5,7 @@
         <div class="header-content">
           <div class="logo-container">
             <router-link to="/" class="logo">
-              <span class="logo-text" v-motion-slide-visible-once-right>民俗文化</span>
+              <span class="logo-text" v-motion-slide-visible-once-right>乘灼</span>
             </router-link>
           </div>
           
@@ -19,12 +19,7 @@
             </ul>
           </nav>
           
-          <div class="header-actions">
-            <el-button type="primary" class="search-btn" v-motion-slide-visible-once-right>
-              <el-icon><Search /></el-icon>
-              搜索
-            </el-button>
-          </div>
+          <!-- 搜索按钮已移除 -->
         </div>
       </div>
       
@@ -44,14 +39,17 @@
         <div class="footer-content">
           <div class="footer-section">
             <h3>关于我们</h3>
-            <p>致力于传承和弘扬中华优秀传统文化，让民俗文化走进现代生活。</p>
+            <p class="slogan-text">
+              <span class="slogan-line" data-text="乘势向上">乘势向上</span>
+              <span class="slogan-line" data-text="灼见真知">灼见真知</span>
+            </p>
           </div>
           
           <div class="footer-section">
             <h3>快速链接</h3>
             <ul class="footer-links">
               <li><router-link to="/">首页</router-link></li>
-              <li><router-link to="/culture">民俗文化</router-link></li>
+              <li><router-link to="/minzu">民族文化</router-link></li>
               <li><router-link to="/regions">地区浏览</router-link></li>
               <li><router-link to="/about">关于我们</router-link></li>
             </ul>
@@ -65,7 +63,7 @@
         </div>
         
         <div class="footer-bottom">
-          <p>&copy; {{ currentYear }} 民俗文化平台. 保留所有权利.</p>
+          <p>&copy; {{ currentYear }} 乘灼文化. 保留所有权利.</p>
         </div>
       </div>
     </footer>
@@ -88,7 +86,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Search, Menu, ArrowUp } from '@element-plus/icons-vue'
+import { ArrowUp } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const isScrolled = ref(false)
@@ -119,7 +117,7 @@ const navigateTo = (path) => {
 // 导航菜单项
 const navItems = ref([
   { name: '首页', path: '/' },
-  { name: '民俗文化', path: '/culture' },
+  { name: '民族文化', path: '/minzu' },
   { name: '地区浏览', path: '/regions' },
   { name: '关于我们', path: '/about' }
 ])
@@ -135,6 +133,29 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<style lang="scss">
+// 导入行书字体（增强回退机制）
+@font-face {
+  font-family: 'XingShu';
+  // 首选系统中文字体作为主要字体，确保在没有外部字体文件时也能正常显示
+  src: local('STXingkai'), local('华文行楷'), local('STKaiti'), local('KaiTi');
+  // 同时保留外部字体文件引用，当实际文件存在时会使用
+  src: url('./assets/fonts/xingshu.woff2') format('woff2'),
+       url('./assets/fonts/xingshu.woff') format('woff'),
+       url('./assets/fonts/xingshu.ttf') format('truetype'),
+       // 回退到系统字体
+       local('STXingkai'), local('华文行楷'), local('STKaiti'), local('KaiTi');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// 全局字体变量 - 增强回退机制
+:root {
+  --xing-shu-font: 'XingShu', 'STXingkai', '华文行楷', 'STKaiti', 'KaiTi', 'SimSun', serif;
+}
+</style>
 
 <style lang="scss" scoped>
 // 导入主题变量
@@ -187,10 +208,29 @@ onUnmounted(() => {
       }
       
       .logo-text {
-        font-family: 'STKaiti', 'KaiTi', serif;
+        font-family: var(--xing-shu-font);
+        font-size: 1.2em; // 1.2倍于标准文本字体大小
+        line-height: 1.5; // 行高为字体大小的1.5倍
+        letter-spacing: 0.15em; // 字间距为0.15em
         
+        // 确保字体渲染清晰
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        
+        // 响应式调整
         @media (max-width: 768px) {
           display: none;
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+          font-size: 1.1em;
+          letter-spacing: 0.12em;
+        }
+        
+        @media (min-width: 1025px) {
+          font-size: 1.3em;
+          letter-spacing: 0.18em;
         }
       }
     }
@@ -297,6 +337,54 @@ onUnmounted(() => {
           margin-bottom: 10px;
           line-height: $line-height-normal;
           color: rgba(255, 255, 255, 0.85);
+        }
+        
+        // 标语文字特殊动效
+        .slogan-text {
+          margin-top: 20px;
+          font-family: var(--xing-shu-font);
+          font-size: 1.5em;
+          line-height: 1.8;
+          text-align: left;
+          
+          .slogan-line {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 5px 0;
+            z-index: 1;
+            overflow: hidden;
+            
+            &:before {
+              content: attr(data-text);
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              color: $primary-color;
+              clip-path: inset(0 0 100% 0);
+              transition: clip-path 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+              padding: 5px 0;
+              z-index: -1;
+            }
+            
+            // 为第二个slogan-line添加不同的动画方向
+            &:nth-child(2):before {
+              clip-path: inset(100% 0 0 0);
+            }
+            
+            &:hover {
+              transform: translateX(10px) translateY(-2px) scale(1.03);
+              color: rgba(255, 255, 255, 1);
+              text-shadow: 0 2px 10px rgba($primary-color, 0.3);
+              
+              &:before {
+                clip-path: inset(0 0 0 0);
+              }
+            }
+          }
         }
       
       .footer-links {

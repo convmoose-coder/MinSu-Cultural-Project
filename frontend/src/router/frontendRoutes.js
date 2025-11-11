@@ -12,20 +12,11 @@ export const frontendRoutes = [
     }
   },
   {
-    path: '/culture',
-    name: 'culture',
-    component: () => import('../views/CultureListView.vue'),
+    path: '/minzu',
+    name: 'minzu',
+    component: () => import('../views/MinzuView.vue'),
     meta: {
-      title: '民俗文化列表',
-      requiresAuth: false
-    }
-  },
-  {
-    path: '/culture/:id',
-    name: 'cultureDetail',
-    component: () => import('../views/CultureDetailView.vue'),
-    meta: {
-      title: '民俗文化详情',
+      title: '乘灼文化',
       requiresAuth: false
     }
   },
@@ -34,7 +25,7 @@ export const frontendRoutes = [
     name: 'regions',
     component: () => import('../views/RegionsView.vue'),
     meta: {
-      title: '地区文化',
+      title: '地区浏览',
       requiresAuth: false
     }
   },
@@ -52,7 +43,7 @@ export const frontendRoutes = [
     name: 'notFound',
     component: HomeView,
     meta: {
-      title: '页面未找到 - 民俗文化展示系统',
+      title: '页面未找到',
       requiresAuth: false
     }
   }
