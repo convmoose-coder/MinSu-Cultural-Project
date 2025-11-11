@@ -338,15 +338,29 @@ npm run dev
    ```bash
    python app.py
    ```
-### Linux服务器部署
+### 部署指南
 
-详细部署指南请参考 [DEPLOYMENT_LINUX.md](DEPLOYMENT_LINUX.md) 文件，其中包含了完整的Linux服务器部署步骤，包括：
-- 环境准备和依赖安装
-- 数据库配置和初始化
-- 前后端服务部署
-- Nginx反向代理配置
-- SSL证书配置
-- 服务管理和监控
+项目提供了多种部署方式，请根据您的需求选择合适的部署文档：
+
+#### Docker部署
+详细的Docker容器化部署指南请参考 [DEPLOYMENT_DOCKER.md](new_architecture/DEPLOYMENT_DOCKER.md)，包含：
+- Docker环境配置
+- 容器编排设置
+- 环境变量配置
+- 一键部署脚本
+
+#### 云服务器部署
+云服务器部署步骤请参考 [DEPLOYMENT_CLOUD.md](new_architecture/DEPLOYMENT_CLOUD.md)，包含：
+- 云服务器环境准备
+- 依赖安装和配置
+- 服务启动和管理
+
+#### Nginx配置指南
+Nginx反向代理和静态资源配置请参考 [DEPLOYMENT_NGINX.md](new_architecture/DEPLOYMENT_NGINX.md)，包含：
+- 虚拟主机配置
+- SSL证书安装
+- 性能优化设置
+- 安全配置
 
 ## 性能优化
 
