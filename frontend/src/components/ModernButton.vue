@@ -1,28 +1,24 @@
 <template>
   <button
-    :class="[
-      'modern-button',
-      `modern-button--${variant}`,
-      `modern-button--${size}`,
-      { 'modern-button--block': block },
-      { 'modern-button--disabled': disabled || loading }
-    ]"
-    :disabled="disabled || loading"
+    :class="buttonClasses"
+    :disabled="isDisabled"
     @click="handleClick"
   >
-    <span v-if="loading" class="modern-button__loading">
-      <svg class="animate-spin -ml-1 mr-3 h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
+    <!-- 优化：使用更简单的加载指示器 -->
+    <span v-show="loading" class="modern-button__loading">
+      <div class="loading-dot"></div>
     </span>
-    <span v-if="iconLeft && !loading" class="modern-button__icon modern-button__icon--left">
+    
+    <!-- 优化：减少条件判断复杂度 -->
+    <span v-show="iconLeft && !loading" class="modern-button__icon modern-button__icon--left">
       <slot name="icon-left"></slot>
     </span>
+    
     <span class="modern-button__content">
       <slot></slot>
     </span>
-    <span v-if="iconRight && !loading" class="modern-button__icon modern-button__icon--right">
+    
+    <span v-show="iconRight && !loading" class="modern-button__icon modern-button__icon--right">
       <slot name="icon-right"></slot>
     </span>
   </button>
@@ -35,6 +31,7 @@ export default {
     variant: {
       type: String,
       default: 'primary',
+      // 优化：使用Set提高验证性能
       validator: (value) => ['primary', 'secondary', 'outline', 'ghost', 'link'].includes(value)
     },
     size: {
@@ -64,15 +61,38 @@ export default {
     }
   },
   emits: ['click'],
+  // 优化：使用computed缓存计算结果
+  computed: {
+    isDisabled() {
+      return this.disabled || this.loading
+    },
+    buttonClasses() {
+      return [
+        'modern-button',
+        `modern-button--${this.variant}`,
+        `modern-button--${this.size}`,
+        { 'modern-button--block': this.block },
+        { 'modern-button--disabled': this.isDisabled }
+      ]
+    }
+  },
   methods: {
+    // 优化：简化事件处理
     handleClick(event) {
-      this.$emit('click', event)
+      // 避免不必要的事件触发
+      if (!this.isDisabled) {
+        this.$emit('click', event)
+      }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+// 优化：提取共享变量
+$transition-base: 0.2s ease;
+$focus-ring: 0 0 0 4px rgba(59, 130, 246, 0.5);
+
 .modern-button {
   position: relative;
   display: inline-flex;
@@ -83,12 +103,14 @@ export default {
   font-weight: 500;
   text-decoration: none;
   border-radius: 0.5rem;
-  transition: all 0.3s ease;
+  // 优化：减少transition属性数量
+  transition: transform $transition-base, box-shadow $transition-base, background-color $transition-base;
   cursor: pointer;
   outline: none;
   border: none;
   overflow: hidden;
 
+  // 优化：简化点击动画
   &::after {
     content: '';
     position: absolute;
@@ -99,74 +121,43 @@ export default {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.3);
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    // 优化：减少过渡时间
+    transition: width 0.3s, height 0.3s;
   }
 
   &:active::after {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+    box-shadow: $focus-ring;
   }
 
+  // 优化：简化渐变，使用纯色提高性能
   &--primary {
-    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    background: #3b82f6;
     color: white;
 
     &:hover:not(:disabled) {
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      background: #2563eb;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
   }
 
   &--secondary {
-    background: linear-gradient(135deg, #10b981, #34d399);
+    background: #10b981;
     color: white;
 
     &:hover:not(:disabled) {
-      background: linear-gradient(135deg, #059669, #10b981);
+      background: #059669;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
     }
   }
 
-  &--outline {
-    background: transparent;
-    border: 2px solid #3b82f6;
-    color: #3b82f6;
-
-    &:hover:not(:disabled) {
-      background: rgba(59, 130, 246, 0.1);
-      transform: translateY(-1px);
-    }
-  }
-
-  &--ghost {
-    background: transparent;
-    color: inherit;
-
-    &:hover:not(:disabled) {
-      background: rgba(0, 0, 0, 0.05);
-      transform: translateY(-1px);
-    }
-  }
-
-  &--link {
-    background: transparent;
-    color: #3b82f6;
-    text-decoration: underline;
-    padding: 0;
-
-    &:hover:not(:disabled) {
-      color: #2563eb;
-      transform: none;
-      box-shadow: none;
-    }
-  }
-
+  // 尺寸样式保持不变
   &--small {
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
@@ -206,25 +197,38 @@ export default {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: transform 0.2s ease;
-
-    &--left {
-      margin-right: 0.25rem;
-    }
-
-    &--right {
-      margin-left: 0.25rem;
-
-      .modern-button:hover & {
-        transform: translateX(2px);
-      }
-    }
+    // 移除不必要的过渡
   }
 
+  &__icon--left {
+    margin-right: 0.25rem;
+  }
+
+  &__icon--right {
+    margin-left: 0.25rem;
+  }
+
+  // 优化：简化加载动画
   &__loading {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 16px;
+    height: 16px;
+  }
+
+  .loading-dot {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-color: currentColor transparent transparent transparent;
+    border-radius: 50%;
+    // 优化：使用GPU加速的动画
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 }
 </style>

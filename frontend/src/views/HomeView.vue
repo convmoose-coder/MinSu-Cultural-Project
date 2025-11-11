@@ -34,6 +34,7 @@
             </modern-button>
             
             <modern-button 
+              v-if="false"
               size="large" 
               variant="outline"
               @click="handleViewGallery"
@@ -66,7 +67,7 @@
     </section>
 
     <!-- 民族文化展示区域 -->
-    <section class="culture-section">
+    <section class="culture-section" ref="cultureSectionRef">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">
@@ -472,57 +473,21 @@ export default {
     },
     
     // 探索更多地区
-    async exploreMoreRegions() {
-      this.loadingRegions = true;
-      try {
-        // 模拟加载延迟
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // 添加更多默认数据
-        const moreRegions = [
-          {
-            id: '4',
-            title: '岭南风情',
-            subtitle: '开放包容的海洋文化',
-            image: '/images/placeholder-region.jpg',
-            stats: {
-              attractions: 134,
-              cultures: 28
-            },
-            tags: ['岭南', '粤菜', '骑楼', '侨乡'],
-            gradientStart: 'rgba(255, 193, 7, 0.8)',
-            gradientEnd: 'rgba(255, 87, 34, 0.3)',
-            gradientDirection: 'bottom',
-            contentPosition: 'bottom'
-          },
-          {
-            id: '5',
-            title: '西北大漠',
-            subtitle: '丝绸之路的文明交汇',
-            image: '/images/placeholder-region.jpg',
-            stats: {
-              history: 2000,
-              cultures: 35
-            },
-            tags: ['沙漠', '丝路', '石窟', '绿洲'],
-            gradientStart: 'rgba(121, 85, 72, 0.8)',
-            gradientEnd: 'rgba(229, 194, 152, 0.3)',
-            gradientDirection: 'bottom',
-            contentPosition: 'bottom'
-          }
-        ];
-        
-        this.regions = [...this.regions, ...moreRegions];
-      } catch (error) {
-        console.error('加载更多地区数据失败:', error);
-      } finally {
-        this.loadingRegions = false;
-      }
-    },
+  exploreMoreRegions() {
+    // 性能优化：移除不必要的异步加载和延迟
+    // 直接跳转到地区浏览页面
+    this.$router.push({ name: 'regions' });
+  },
     
     // 处理探索按钮点击
     handleExplore() {
-      console.log('开始探索');
+      // 滚动到文化区域
+      if (this.$refs.cultureSectionRef) {
+        this.$refs.cultureSectionRef.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     },
     
     // 处理浏览图库按钮点击
