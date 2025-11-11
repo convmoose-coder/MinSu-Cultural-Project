@@ -23,7 +23,7 @@ app.include_router(search.router, prefix="/api/v1/search", tags=["search"])
 
 @app.get("/")
 async def root():
-    return {"message": "欢迎使用民宿文化平台API"}
+    return {"message": "欢迎使用乘灼API"}
 
 @app.get("/health")
 async def health_check():

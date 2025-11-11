@@ -2,10 +2,10 @@ from pydantic_settings import BaseSettings
 from typing import List
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "民宿文化平台"
+    PROJECT_NAME: str = "乘灼"
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = "your-secret-key-here"
-    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:3001"]
+    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:5173", "http://localhost:5174"]
     
     # 数据库配置
     POSTGRES_SERVER: str = "db"

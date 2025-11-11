@@ -1,12 +1,12 @@
 <template>
   <div>
     <h2>管理后台首页</h2>
-    <p>欢迎使用民宿文化管理后台系统</p>
+    <p>欢迎使用乘灼管理后台系统</p>
     
     <el-row :gutter="20">
       <el-col :span="8">
         <el-card>
-          <h3>民宿文化总数</h3>
+          <h3>乘灼文化总数</h3>
           <p>128</p>
         </el-card>
       </el-col>

@@ -47,6 +47,7 @@ export default {
       if (this.defaultSrc) {
         return this.defaultSrc.startsWith('/') ? this.defaultSrc : '/images/' + this.defaultSrc
       }
+      // 使用public/images目录下的traditional.jpg，这是生产环境的推荐方式
       return '/images/traditional.jpg'
     },
     // 获取最终图片路径

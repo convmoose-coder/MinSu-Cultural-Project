@@ -340,27 +340,15 @@ npm run dev
    ```
 ### 部署指南
 
-项目提供了多种部署方式，请根据您的需求选择合适的部署文档：
+### 服务器部署
+详细的服务器部署步骤请参考：[部署指南](./new_architecture/DEPLOYMENT_LINUX.md)。
+包含环境准备、数据库配置、前后端部署、Nginx代理、SSL配置及服务监控等内容。
 
-#### Docker部署
-详细的Docker容器化部署指南请参考 [DEPLOYMENT_DOCKER.md](new_architecture/DEPLOYMENT_DOCKER.md)，包含：
-- Docker环境配置
-- 容器编排设置
-- 环境变量配置
-- 一键部署脚本
+### Nginx配置指南
+详细的Nginx配置步骤请参考：[Nginx配置指南](./new_architecture/DEPLOYMENT_NGINX.md)。
+包含反向代理设置、SSL配置、性能优化等内容。
 
-#### 云服务器部署
-云服务器部署步骤请参考 [DEPLOYMENT_CLOUD.md](new_architecture/DEPLOYMENT_CLOUD.md)，包含：
-- 云服务器环境准备
-- 依赖安装和配置
-- 服务启动和管理
-
-#### Nginx配置指南
-Nginx反向代理和静态资源配置请参考 [DEPLOYMENT_NGINX.md](new_architecture/DEPLOYMENT_NGINX.md)，包含：
-- 虚拟主机配置
-- SSL证书安装
-- 性能优化设置
-- 安全配置
+> **注意**：当前环境未安装Docker，所有服务将直接部署在服务器上运行。
 
 ## 性能优化
 

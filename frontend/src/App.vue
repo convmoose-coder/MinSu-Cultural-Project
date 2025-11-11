@@ -1,18 +1,27 @@
 <template>
   <div class="app-container">
-    <header class="app-header" v-motion-slide-visible-once-bottom>
+    <header class="app-header" :class="{ 'is-visible': headerVisible }">
       <div class="container">
         <div class="header-content">
           <div class="logo-container">
             <router-link to="/" class="logo">
-              <span class="logo-text" v-motion-slide-visible-once-right>乘灼</span>
+              <span 
+                ref="logoRef"
+                class="logo-text animate-on-load"
+              >
+                乘灼
+              </span>
             </router-link>
           </div>
           
           <nav class="main-nav">
             <ul class="nav-list">
-              <li class="nav-item" v-for="item in navItems" :key="item.path">
-                <router-link :to="item.path" class="nav-link" v-motion-slide-visible-once-bottom>
+              <li class="nav-item" v-for="(item, index) in navItems" :key="item.path">
+                <router-link 
+                  :to="item.path" 
+                  class="nav-link" 
+                  :style="{ animationDelay: `${0.1 + index * 0.05}s` }"
+                >
                   {{ item.name }}
                 </router-link>
               </li>
@@ -57,7 +66,7 @@
           
           <div class="footer-section">
             <h3>联系我们</h3>
-            <p>邮箱：contact@minsu.com</p>
+            <p>邮箱：contact@chengzhuo.com</p>
             <p>电话：400-123-4567</p>
           </div>
         </div>
@@ -92,10 +101,111 @@ const router = useRouter()
 const isScrolled = ref(false)
 const showBackToTop = ref(false)
 const isMenuOpen = ref(false)
+const logoRef = ref(null)
+const scrollPosition = ref(0)
+const headerVisible = ref(false)
+
+// 使用requestAnimationFrame优化滚动处理
+let animationId = null;
+let lastScrollY = 0;
+
+// 监听页面加载完成后触发header动画
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  
+  // 添加页面可见性检查，仅在页面可见时激活动画
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+  
+  // 初始延迟显示header以提高感知性能
+  setTimeout(() => {
+    headerVisible.value = true
+  }, 100)
+  
+  // 预加载动画资源
+  preloadAnimationResources()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  
+  // 清理动画帧
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+  }
+})
+
+// 处理页面可见性变化
+const handleVisibilityChange = () => {
+  const navLinks = document.querySelectorAll('.nav-link')
+  
+  if (document.hidden) {
+    // 页面不可见时暂停所有动画
+    navLinks.forEach(link => {
+      link.style.animationPlayState = 'paused'
+    })
+    if (logoRef.value) {
+      logoRef.value.style.animationPlayState = 'paused'
+    }
+  } else {
+    // 页面可见时恢复动画
+    navLinks.forEach(link => {
+      link.style.animationPlayState = 'running'
+    })
+    if (logoRef.value) {
+      logoRef.value.style.animationPlayState = 'running'
+    }
+  }
+}
+
+// 预加载动画资源
+const preloadAnimationResources = () => {
+  // 创建一个不可见的元素来预加载动画效果
+  const preloader = document.createElement('div')
+  preloader.style.position = 'absolute'
+  preloader.style.width = '0'
+  preloader.style.height = '0'
+  preloader.style.overflow = 'hidden'
+  document.body.appendChild(preloader)
+  
+  // 模拟动画资源加载
+  setTimeout(() => {
+    document.body.removeChild(preloader)
+  }, 1000)
+}
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-  showBackToTop.value = window.scrollY > 300
+  lastScrollY = window.scrollY;
+  
+  if (!animationId) {
+    animationId = requestAnimationFrame(updateScrollEffects);
+  }
+}
+
+const updateScrollEffects = () => {
+  const currentScrollY = lastScrollY;
+  scrollPosition.value = currentScrollY;
+  
+  // 更新滚动状态 - 使用节流逻辑
+  if (Math.abs(currentScrollY - (isScrolled.value ? 100 : 0)) > 30) {
+    isScrolled.value = currentScrollY > 50;
+  }
+  
+  // 回到顶部按钮显示逻辑
+  showBackToTop.value = currentScrollY > 300;
+  
+  // logo动态效果处理 - 使用CSS变量而非直接操作style
+  if (logoRef.value) {
+    // 计算视差效果值和透明度
+    const scrollFactor = Math.min(currentScrollY * 0.03, 10);
+    const opacityFactor = Math.max(0.8, 1 - currentScrollY * 0.001);
+    
+    // 使用CSS变量更新，避免频繁的样式属性更改
+    logoRef.value.style.setProperty('--logo-transform-y', `-${scrollFactor}px`);
+    logoRef.value.style.setProperty('--logo-opacity', opacityFactor.toString());
+  }
+  
+  animationId = null;
 }
 
 const scrollToTop = () => {
@@ -170,12 +280,56 @@ onUnmounted(() => {
 }
 
 .app-header {
-  background-color: $bg-primary;
-  box-shadow: $shadow-sm;
-  position: sticky;
-  top: 0;
-  z-index: $z-index-fixed;
-  transition: all $transition-base;
+    background-color: $bg-primary;
+    box-shadow: $shadow-sm;
+    position: sticky;
+    top: 0;
+    z-index: $z-index-fixed;
+    
+    // 性能优化：提前告知浏览器将要变化的属性
+    will-change: transform, background-color, box-shadow;
+    
+    // 更高效的过渡属性 - 避免使用'all'
+    transition: transform 0.3s ease, 
+                background-color 0.3s ease, 
+                box-shadow 0.3s ease, 
+                height 0.3s ease;
+    
+    // 默认不可见，用于入场动画
+    opacity: 0;
+    transform: translateY(-20px);
+    
+    // 可见状态的样式 - 使用类而非v-motion指令
+    &.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      animation: slideInUp 0.5s ease-out 0.1s both;
+    }
+    
+    // 入场动画 - 更高效的关键帧
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    // 滚动时的样式变化 - 优化性能
+    &.is-scrolled {
+      height: 60px;
+      box-shadow: $shadow-md;
+      background-color: rgba($bg-primary, 0.98);
+      backdrop-filter: blur(8px);
+      
+      .logo-container .logo .logo-text {
+        font-size: 1em;
+        transition: font-size 0.3s ease;
+      }
+    }
   
   .header-content {
     display: flex;
@@ -218,6 +372,98 @@ onUnmounted(() => {
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
         
+        // 使用CSS变量存储动态值
+        --logo-transform-y: 0;
+        --logo-opacity: 1;
+        
+        // 基本动画设置 - 使用更高效的属性组合
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                    letter-spacing 0.3s ease, 
+                    text-shadow 0.3s ease;
+        position: relative;
+        display: inline-block;
+        
+        // 文字阴影增强视觉深度
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        
+        // 应用滚动效果的CSS变量
+        transform: translateY(var(--logo-transform-y));
+        opacity: var(--logo-opacity);
+        
+        // 悬停效果 - 只修改GPU加速属性
+        &:hover {
+          // 轻微放大和提升 - 使用transform (GPU加速)
+          transform: scale(1.1) translateY(-3px) translateY(var(--logo-transform-y));
+          
+          // 增强文字阴影
+          text-shadow: 0 4px 8px rgba($primary-color, 0.25),
+                       0 1px 3px rgba(0, 0, 0, 0.1);
+          
+          // 颜色渐变效果 - 使用伪元素代替直接操作background-clip
+          &::after {
+            content: '乘灼';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, $primary-color, $accent-color);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+          }
+          
+          // 字母间距变化
+          letter-spacing: 0.2em;
+        }
+        
+        // 创建伪元素用于渐变效果
+        &::after {
+          content: '乘灼';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, $primary-color, $accent-color);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          z-index: -1;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        // 激活状态
+        &:active {
+          transform: scale(1.05) translateY(var(--logo-transform-y));
+          transition: transform 0.1s ease;
+        }
+        
+        // 加载动画 - 优化关键帧以减少重排
+        @keyframes pulseText {
+          0%, 100% {
+            transform: scale(1) translateY(var(--logo-transform-y));
+          }
+          50% {
+            transform: scale(1.05) translateY(var(--logo-transform-y));
+          }
+        }
+        
+        // 初始化动画 - 仅在页面首次加载时触发
+        &.animate-on-load {
+          animation: pulseText 0.8s ease-out 0.2s both; // 添加延迟以提高感知性能
+          animation-play-state: running;
+        }
+        
+        // 优化滚动状态下的动画
+        .app-header.is-scrolled & {
+          animation-play-state: paused; // 滚动时暂停动画以提高性能
+        }
+        
         // 响应式调整
         @media (max-width: 768px) {
           display: none;
@@ -231,6 +477,14 @@ onUnmounted(() => {
         @media (min-width: 1025px) {
           font-size: 1.3em;
           letter-spacing: 0.18em;
+        }
+        
+        // 触摸设备优化
+        @media (hover: none) and (pointer: coarse) {
+          &:active {
+            transform: scale(1.05) translateY(-2px);
+            text-shadow: 0 2px 4px rgba($primary-color, 0.2);
+          }
         }
       }
     }
@@ -266,11 +520,51 @@ onUnmounted(() => {
           font-weight: 500;
           padding: 8px 0;
           border-bottom: 2px solid transparent;
-          transition: $transition-base;
+          position: relative;
           
+          // 初始状态 - 用于动画
+          opacity: 0;
+          transform: translateY(10px);
+          
+          // 使用CSS动画代替v-motion指令
+          animation: navLinkFadeIn 0.4s ease-out both;
+          
+          // 优化过渡效果，仅包含必要属性
+          transition: color 0.2s ease, 
+                      transform 0.2s ease;
+          
+          // 悬停效果 - 使用transform代替border-bottom变化
           &:hover, &.router-link-active {
             color: $primary-color;
-            border-bottom-color: $primary-color;
+            transform: translateY(-2px);
+          }
+          
+          // 使用伪元素实现下划线效果，避免重排
+          &:hover::after, &.router-link-active::after {
+            width: 100%;
+          }
+          
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: $primary-color;
+            transition: width 0.3s ease;
+          }
+        }
+        
+        // 导航链接的入场动画
+        @keyframes navLinkFadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
       }

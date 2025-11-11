@@ -14,7 +14,7 @@
           </el-menu-item>
           <el-menu-item index="2">
             <el-icon><Document /></el-icon>
-            <span>民宿文化管理</span>
+            <span>乘灼</span>
           </el-menu-item>
           <el-menu-item index="3">
             <el-icon><Setting /></el-icon>
@@ -25,7 +25,7 @@
       
       <el-container>
         <el-header>
-          <h1>民宿文化管理后台</h1>
+          <h1>乘灼管理后台</h1>
         </el-header>
         
         <el-main>

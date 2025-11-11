@@ -43,7 +43,7 @@
         <h2>联系我们</h2>
         <p>如果您有任何问题、建议或合作意向，欢迎随时与我们联系。我们期待与您一起，为传承和弘扬中华优秀传统文化贡献力量。</p>
         <div class="contact-info">
-          <p><strong>邮箱：</strong>contact@minsu.com</p>
+          <p><strong>邮箱：</strong>contact@chengzhuo.com</p>
           <p><strong>电话：</strong>400-123-4567</p>
         </div>
       </section>
