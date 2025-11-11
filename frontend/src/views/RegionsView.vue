@@ -49,7 +49,7 @@ const mockCultures: FolkCulture[] = [
     description: '苏州评弹是苏州地区特有的说唱艺术形式，被誉为江南曲艺的瑰宝。它融合了说、噱、弹、唱等艺术手法，内容多取材于历史故事和民间传说。',
     category: '传统艺术',
     region: '江南水乡',
-    image: 'https://picsum.photos/seed/suzhou/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-01-15'
   },
   {
@@ -58,7 +58,7 @@ const mockCultures: FolkCulture[] = [
     description: '江南园林以其精巧的设计和浓厚的文化底蕴闻名于世。园林营造技艺包括叠石、理水、植物配置等多个方面，体现了中国传统美学思想。',
     category: '传统工艺',
     region: '江南水乡',
-    image: 'https://picsum.photos/seed/garden/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-02-10'
   },
   // 塞北草原
@@ -68,7 +68,7 @@ const mockCultures: FolkCulture[] = [
     description: '蒙古族长调是蒙古族传统音乐的代表，以其悠扬的旋律和丰富的情感表达闻名。它被誉为"草原音乐的活化石"，2005年被列入联合国非物质文化遗产名录。',
     category: '传统音乐',
     region: '塞北草原',
-    image: 'https://picsum.photos/seed/mongolia/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-03-05'
   },
   {
@@ -77,7 +77,7 @@ const mockCultures: FolkCulture[] = [
     description: '那达慕大会是蒙古族的传统节日，意为"娱乐"或"游戏"。大会期间会举行赛马、摔跤、射箭等传统体育活动，是草原文化的重要组成部分。',
     category: '传统节日',
     region: '塞北草原',
-    image: 'https://picsum.photos/seed/nadamu/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-07-12'
   },
   // 西南山地
@@ -87,7 +87,7 @@ const mockCultures: FolkCulture[] = [
     description: '苗族银饰以其精湛的工艺和独特的造型闻名。银饰锻造技艺历史悠久，每件作品都凝聚着匠人的智慧和汗水，是苗族文化的重要载体。',
     category: '传统工艺',
     region: '西南山地',
-    image: 'https://picsum.photos/seed/silver/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-04-20'
   },
   {
@@ -96,7 +96,7 @@ const mockCultures: FolkCulture[] = [
     description: '泼水节是傣族的新年节日，通常在每年的4月中旬举行。节日期间，人们相互泼水祝福，象征着洗去过去一年的不顺，迎接新的开始。',
     category: '传统节日',
     region: '西南山地',
-    image: 'https://picsum.photos/seed/water/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-04-13'
   },
   // 岭南风情
@@ -106,7 +106,7 @@ const mockCultures: FolkCulture[] = [
     description: '粤剧是广东地区最具代表性的戏曲剧种，以其独特的唱腔和表演风格闻名。它融合了唱、做、念、打等艺术形式，深受岭南人民喜爱。',
     category: '传统艺术',
     region: '岭南风情',
-    image: 'https://picsum.photos/seed/yueopera/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-05-08'
   },
   {
@@ -115,7 +115,7 @@ const mockCultures: FolkCulture[] = [
     description: '广彩瓷是广州地区特有的传统工艺美术品，以其色彩艳丽、图案繁复著称。广彩瓷烧制技艺包括制胎、施釉、彩绘、烧制等多个环节，工艺精湛。',
     category: '传统工艺',
     region: '岭南风情',
-    image: 'https://picsum.photos/seed/guangcai/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-05-22'
   },
   // 西北大漠
@@ -125,7 +125,7 @@ const mockCultures: FolkCulture[] = [
     description: '敦煌壁画是中国古代艺术的瑰宝，以其丰富的内容和精湛的技艺闻名于世。壁画描绘了佛本生故事、经变画等内容，色彩鲜艳，线条流畅。',
     category: '传统艺术',
     region: '西北大漠',
-    image: 'https://picsum.photos/seed/dunhuang/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-06-15'
   },
   {
@@ -134,7 +134,7 @@ const mockCultures: FolkCulture[] = [
     description: '十二木卡姆是维吾尔族传统音乐的代表，是一种集歌、舞、乐于一体的综合艺术形式。它被誉为"东方音乐的活化石"，2005年被列入联合国非物质文化遗产名录。',
     category: '传统音乐',
     region: '西北大漠',
-    image: 'https://picsum.photos/seed/mukam/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-06-30'
   },
   // 东北雪原
@@ -144,7 +144,7 @@ const mockCultures: FolkCulture[] = [
     description: '东北二人转是东北地区最具代表性的民间艺术形式，以其幽默风趣的表演和通俗易懂的语言深受观众喜爱。它融合了说唱、舞蹈、杂技等多种艺术元素。',
     category: '传统艺术',
     region: '东北雪原',
-    image: 'https://picsum.photos/seed/errenzhuan/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-01-28'
   },
   // 中原大地
@@ -154,7 +154,7 @@ const mockCultures: FolkCulture[] = [
     description: '豫剧是河南省的主要地方戏曲剧种，也是中国五大戏曲剧种之一。它以其高亢激昂的唱腔和质朴生动的表演风格著称，深受中原人民喜爱。',
     category: '传统艺术',
     region: '中原大地',
-    image: 'https://picsum.photos/seed/yuopera/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-03-20'
   },
   // 东南沿海
@@ -164,7 +164,7 @@ const mockCultures: FolkCulture[] = [
     description: '歌仔戏是闽南地区特有的戏曲剧种，以闽南语演唱，融合了民间歌谣、说唱和戏曲艺术。它是闽南文化的重要组成部分，深受海内外闽南人的喜爱。',
     category: '传统艺术',
     region: '东南沿海',
-    image: 'https://picsum.photos/seed/gezaixi/600/400',
+    image: '@/assets/images/traditional.jpg',
     date: '2024-04-05'
   }
 ]
@@ -268,10 +268,10 @@ onMounted(() => {
       </div>
       
       <div class="region-content">
-        <h3>{{ selectedRegion }} 的民俗文化</h3>
+        <h3>{{ selectedRegion }}</h3>
         
         <div v-if="cultures.length === 0" class="no-cultures">
-          该地区暂无民俗文化记录
+          该地区暂无民族文化记录
         </div>
         
         <div v-else class="culture-grid">

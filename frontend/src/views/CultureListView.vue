@@ -71,14 +71,14 @@ onMounted(() => {
 
 <template>
   <div class="culture-list">
-    <h2>民俗文化列表</h2>
+    <h2>民族文化列表</h2>
     
     <div class="filters">
       <div class="search-box">
         <input 
           type="text" 
           v-model="searchQuery" 
-          placeholder="搜索民俗文化..." 
+          placeholder="搜索..." 
           class="search-input"
         >
       </div>
@@ -102,7 +102,7 @@ onMounted(() => {
     </div>
     
     <div v-else-if="filteredCultures.length === 0" class="no-results">
-      没有找到符合条件的民俗文化
+      没有找到符合条件的民族文化
     </div>
     
     <div v-else class="culture-grid">

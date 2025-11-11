@@ -51,7 +51,7 @@
           </div>
           <div class="stat-item">
             <span class="stat-number">{{ statistics.cultures || 0 }}</span>
-            <span class="stat-label">文化</span>
+            <span class="stat-label">民族</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">{{ statistics.artworks || 0 }}</span>

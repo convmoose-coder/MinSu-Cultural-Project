@@ -11,12 +11,12 @@
     <div class="about-content">
       <section class="mission touch-feedback">
         <h2>我们的使命</h2>
-        <p>中国民俗文化网致力于收集、整理和展示中华大地上丰富多彩的民俗文化资源，让更多的人了解和传承中华优秀传统文化。我们希望通过数字技术，打破地域和时间的限制，让珍贵的民俗文化得以保存和传播。</p>
+        <p>乘灼致力于收集、整理和展示中华大地上丰富多彩的民族文化资源，让更多的人了解和传承中华优秀传统文化。我们希望通过数字技术，打破地域和时间的限制，让珍贵的民族文化得以保存和传播。</p>
       </section>
       
       <section class="vision touch-feedback">
         <h2>我们的愿景</h2>
-        <p>成为中国最具影响力的民俗文化数字平台，连接传统与现代，促进文化交流与传承，让民俗文化在新时代焕发新的生机。</p>
+        <p>乘灼数字平台，连接传统与现代，促进民族文化交流与传承，让民族文化在新时代焕发新的生机。</p>
       </section>
       
       <section class="features touch-feedback">
@@ -24,7 +24,7 @@
         <div class="feature-list">
           <div class="feature-item touch-feedback">
             <h3>丰富的内容资源</h3>
-            <p>涵盖全国各地的民俗文化，包括传统节日、民间艺术、饮食习惯、服饰文化等多个方面。</p>
+            <p>涵盖全国各地的民族文化，包括传统节日、民间艺术、饮食习惯、服饰文化等多个方面。</p>
           </div>
           
           <div class="feature-item touch-feedback">
@@ -34,7 +34,7 @@
           
           <div class="feature-item touch-feedback">
             <h3>深度文化解析</h3>
-            <p>提供详尽的民俗文化解析，帮助用户深入了解文化背后的历史和意义。</p>
+            <p>提供详尽的民族文化解析，帮助用户深入了解文化背后的历史和意义。</p>
           </div>
         </div>
       </section>

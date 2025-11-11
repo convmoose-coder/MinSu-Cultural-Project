@@ -640,15 +640,38 @@ onUnmounted(() => {
           font-size: 1.5em;
           line-height: 1.8;
           text-align: left;
+          // 实现水平方向从左到右排列
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          // 确保子元素之间有适当间距
+          gap: 1rem;
+          // 增强响应式布局能力
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          // 确保父容器宽度不会限制子元素水平排列
+          width: 100%;
+          // 移除可能的边距影响
+          margin: 0;
+          padding: 0;
           
           .slogan-line {
-            display: block;
+            display: inline-block;
             position: relative;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            padding: 5px 0;
+            // 优化内边距，确保良好的触摸区域
+            padding: 8px 12px;
             z-index: 1;
             overflow: hidden;
+            // Adjust width for better horizontal display
+            // width: 4ch; - 移除固定宽度限制，让内容自然流动
+            min-width: 4ch; // 保持最小宽度
+            // Ensure text is displayed from left to right
+            text-align: left;
+            direction: ltr;
+            // 确保元素在不同屏幕尺寸下有良好表现
+            flex-shrink: 0;
             
             &:before {
               content: attr(data-text);
@@ -660,13 +683,16 @@ onUnmounted(() => {
               color: $primary-color;
               clip-path: inset(0 0 100% 0);
               transition: clip-path 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-              padding: 5px 0;
+              padding: 8px 12px;
               z-index: -1;
+              box-sizing: border-box;
             }
             
             // 为第二个slogan-line添加不同的动画方向
             &:nth-child(2):before {
               clip-path: inset(100% 0 0 0);
+              padding: 8px 12px;
+              box-sizing: border-box;
             }
             
             &:hover {
