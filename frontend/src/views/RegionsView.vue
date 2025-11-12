@@ -242,7 +242,13 @@ onMounted(() => {
 
 <template>
   <div class="regions-view">
-    <h2>地区分类</h2>
+    <!-- 页面头部，与其他页面保持一致的渐变背景 -->
+    <div class="regions-header">
+      <div class="header-content">
+        <h1>地区分类</h1>
+        <p>探索中国各地丰富多彩的民族文化</p>
+      </div>
+    </div>
     
     <LoadingSpinner v-if="loading" :full-screen="false" message="正在加载地区数据..." />
     
@@ -251,7 +257,8 @@ onMounted(() => {
       <button class="retry-btn" @click="handleRetry">重试</button>
     </div>
     
-    <div v-else class="regions-container">
+    <div class="regions-content">
+      <div class="regions-container">
       <div class="region-list">
         <h3>选择地区</h3>
         <ul>
@@ -283,21 +290,43 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .regions-view {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 0;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
-.regions-view h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #333;
+/* 页面头部渐变背景，与首页和民族文化页面保持一致 */
+.regions-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 60px 20px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.regions-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.regions-header p {
+  font-size: 1.2rem;
+  opacity: 0.9;
 }
 
 .error-message {
@@ -314,18 +343,30 @@ onMounted(() => {
 }
 
 .retry-btn {
-  background-color: #8B4513;
+  background-color: #667eea;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: 500;
 }
 
 .retry-btn:hover {
-  background-color: #6d3510;
+  background-color: #5a5fc7;
+  transform: translateY(-1px);
+}
+
+.retry-btn:active {
+  transform: translateY(0);
+}
+
+.regions-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
 
 .regions-container {
@@ -333,8 +374,8 @@ onMounted(() => {
   grid-template-columns: 250px 1fr;
   gap: 2rem;
   background-color: white;
-  border-radius: 8px;
-  padding: 2rem;
+  border-radius: 10px;
+  padding: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -347,9 +388,10 @@ onMounted(() => {
 
 .region-list h3 {
   margin-top: 0;
-  margin-bottom: 1rem;
-  color: #333;
-  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .region-list ul {
@@ -359,23 +401,25 @@ onMounted(() => {
 }
 
 .region-list li {
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.25rem;
-  border-radius: 4px;
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s;
-  color: #555;
+  transition: all 0.3s ease;
+  color: #475569;
   border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .region-list li:hover {
-  background-color: #f0f0f0;
-  color: #8B4513;
-  border-color: #8B4513;
+  background-color: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  border-color: #667eea;
 }
 
 .region-list li.active {
-  background-color: #8B4513;
+  background-color: #667eea;
   color: white;
 }
 
@@ -389,38 +433,115 @@ onMounted(() => {
 .region-content h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #333;
-  font-size: 1.4rem;
+  color: #1e293b;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #667eea;
+  display: inline-block;
 }
 
 .no-cultures {
   text-align: center;
-  padding: 3rem;
-  color: #666;
-  background-color: #f8f9fa;
-  border-radius: 8px;
+  padding: 4rem;
+  color: #64748b;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  border: 1px dashed #e2e8f0;
 }
 
 .culture-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
 }
 
-/* 响应式调整 */
+/* 响应式布局，与其他页面保持一致 */
   @media (max-width: 992px) {
     .regions-container {
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .region-list {
+      display: flex;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .region-list li {
+      white-space: nowrap;
+      margin-right: 0.75rem;
+      margin-bottom: 0;
+      padding: 10px 16px;
+    }
+    
+    .culture-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
     }
   }
 
   @media (max-width: 768px) {
+    .regions-header {
+      padding: 40px 15px;
+    }
+    
+    .regions-header h1 {
+      font-size: 2rem;
+    }
+    
+    .regions-header p {
+      font-size: 1rem;
+    }
+    
+    .regions-content {
+      padding: 20px 15px;
+    }
+    
     .regions-container {
-      grid-template-columns: 1fr;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    
+    .region-content h3 {
+      font-size: 1.4rem;
     }
     
     .culture-grid {
       grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .no-cultures {
+      padding: 3rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .regions-header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .region-list {
+      padding-bottom: 10px;
+    }
+    
+    .region-list li {
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    
+    .regions-container {
+      padding: 16px;
+    }
+    
+    .region-content h3 {
+      font-size: 1.25rem;
     }
   }
 
@@ -437,9 +558,10 @@ onMounted(() => {
     overflow: hidden;
   }
 
+  /* 触摸反馈相关样式需要同步更新颜色 */
   .touch-feedback:active {
     transform: scale(0.97);
-    background-color: rgba(139, 69, 19, 0.05);
+    background-color: rgba(102, 126, 234, 0.05);
   }
 
   .touch-feedback::before {
@@ -449,7 +571,7 @@ onMounted(() => {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(139, 69, 19, 0.1);
+    background-color: rgba(102, 126, 234, 0.1);
     opacity: 0;
     transition: opacity 0.2s;
     border-radius: inherit;
@@ -484,5 +606,75 @@ onMounted(() => {
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* 引入与首页和民族文化页面一致的动画效果 */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  /* 动画类 */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .pulse-animation {
+    animation: pulse 3s infinite;
+  }
+
+  /* 为文化卡片添加悬停动画效果 */
+  .culture-grid > div {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .culture-grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+  }
+
+  /* 为地区选择项添加入场动画 */
+  .region-list li {
+    animation: fadeInUp 0.5s ease-out backwards;
+  }
+
+  .region-list li:nth-child(1) { animation-delay: 0.1s; }
+  .region-list li:nth-child(2) { animation-delay: 0.2s; }
+  .region-list li:nth-child(3) { animation-delay: 0.3s; }
+  .region-list li:nth-child(4) { animation-delay: 0.4s; }
+  .region-list li:nth-child(5) { animation-delay: 0.5s; }
+  .region-list li:nth-child(6) { animation-delay: 0.6s; }
+  .region-list li:nth-child(7) { animation-delay: 0.7s; }
+  .region-list li:nth-child(8) { animation-delay: 0.8s; }
+
+  /* 为标题添加淡入动画 */
+  .regions-header h1,
+  .regions-header p,
+  .region-content h3 {
+    animation: fadeInUp 0.8s ease-out;
+  }
 
 </style>
