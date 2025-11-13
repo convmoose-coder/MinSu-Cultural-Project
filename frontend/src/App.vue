@@ -72,7 +72,7 @@
         </div>
         
         <div class="footer-bottom">
-          <p>&copy; {{ currentYear }} 乘灼文化. 保留所有权利.</p>
+          <p>&copy; {{ currentYear }} 乘灼文化. 保留所有权利. <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">ICP备案号：0</a></p>
         </div>
       </div>
     </footer>
