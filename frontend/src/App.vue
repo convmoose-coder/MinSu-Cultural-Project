@@ -12,8 +12,52 @@
       </RouterView>
     </main>
 
-    <!-- 页脚组件 -->
-    <Footer />
+    <footer class="app-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>关于我们</h3>
+            <p class="slogan-text">
+              <span class="slogan-line" data-text="乘势向上">乘势向上</span>
+              <span class="slogan-line" data-text="灼见真知">灼见真知</span>
+            </p>
+          </div>
+          
+          <div class="footer-section">
+            <h3>快速链接</h3>
+            <ul class="footer-links">
+              <li><router-link to="/">首页</router-link></li>
+              <li><router-link to="/minzu">民族文化</router-link></li>
+              <li><router-link to="/regions">地区浏览</router-link></li>
+              <li><router-link to="/about">关于我们</router-link></li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>联系我们</h3>
+            <p>邮箱：contact@chengzhuo.com</p>
+            <p>电话：400-123-4567</p>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; {{ currentYear }} 乘灼文化. 保留所有权利. <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank" rel="noopener noreferrer">ICP备案号：0</a></p>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- 回到顶部按钮 -->
+    <Transition name="fade">
+      <el-button 
+        v-if="showBackToTop"
+        type="primary"
+        circle
+        class="back-to-top"
+        @click="scrollToTop"
+      >
+        <el-icon><ArrowUp /></el-icon>
+      </el-button>
+    </Transition>
   </div>
 </template>
 
